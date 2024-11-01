@@ -1,8 +1,32 @@
-@{
-    ViewData["Title"] = "Home Page";
-}
 
+<!-- Entonces, tambien tenes que llamar los archivos en estos casos -->
+@using tl2_tp6_2024_GonEnGit.Models
+@using EspacioModelos
+
+
+@model List<Productos>
+
+
+<!-- Ctr + c termina la ejecucion del proyecto -->
 <div class="text-center">
     <h1 class="display-4">Esto es Productos</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Descripcion</td>
+                <td>Precio</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Productos prod in Model)
+            {
+                <tr>
+                    <td>@prod.Id</td>
+                    <td>@prod.Descripcion</td>
+                    <td>$ @prod.Precio</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

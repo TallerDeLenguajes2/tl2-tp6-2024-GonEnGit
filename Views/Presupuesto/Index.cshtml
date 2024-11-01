@@ -1,0 +1,29 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model List<Presupuesto>
+
+<div class="text-center">
+    <h1 class="display-4">Esto es Presupuestos</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Descripcion</td>
+                <td>Precio</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Presupuesto presupuesto in Model)
+            {
+                <tr>
+                    <td>@presupuesto.IdPresupuesto</td>
+                    <td>@presupuesto.NombreDestinatario</td>
+                    <td>@presupuesto.FechaCreacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

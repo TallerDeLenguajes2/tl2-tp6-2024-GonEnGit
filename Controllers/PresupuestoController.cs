@@ -1,5 +1,3 @@
-
-
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp6_2024_GonEnGit.Models;
@@ -9,15 +7,15 @@ using EspacioRepositorios;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
-public class ProductosController : Controller
+public class PresupuestoController : Controller
 {
-    private readonly ILogger<ProductosController> _logger;
-    private ProductoRepository repoProducto;
+    private readonly ILogger<PresupuestoController> _logger;
+    private PresupuestoRepository repoPresupuesto;
 
-    public ProductosController(ILogger<ProductosController> logger)
+    public PresupuestoController(ILogger<PresupuestoController> logger)
     {
         _logger = logger;
-        repoProducto = new ProductoRepository();
+        repoPresupuesto = new PresupuestoRepository();
     }
 
 // todas la views van a ser archivos dentro de Views,
@@ -26,14 +24,8 @@ public class ProductosController : Controller
 // dentro de estos metodos usas los controllers de cada cosa
     public IActionResult Index()
     {
-        List<Productos> lista = repoProducto.ListarProductos();
+        List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
         return View(lista);
-    }
-
-    public IActionResult RegistrarProducto(Productos producto)
-    {
-        repoProducto.CargarNuevoProducto(producto);
-        return RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

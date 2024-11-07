@@ -88,4 +88,18 @@ public class PresupuestoRepository
             conexion.Close();
         }
     }
+
+    public void BorrarPresupuesto(int id)
+    {
+        string consulta = @"DELETE FROM Presupuestos WHERE idPresupuesto = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+            comando.Parameters.Add(new SqliteParameter());
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
 }

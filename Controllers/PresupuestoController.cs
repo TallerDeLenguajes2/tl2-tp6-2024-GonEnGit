@@ -50,7 +50,14 @@ public class PresupuestoController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpPost]
+    public IActionResult AgregarDetalle(int idPres, int idProd, int cant)
+    {
+        repoPresupuesto.AgregarDetalle(idPres, idProd, cant);
+        return RedirectToAction("Index");
+    }
 
+// se puede hacer el ultimo sin view models?
 
 // esto no lo tocas todavia
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -28,6 +28,13 @@ public class PresupuestoController : Controller
         return View(lista);
     }
 
+    [HttpPost]
+    public IActionResult CrearPresupuesto(Presupuesto presupuesto)
+    {
+        repoPresupuesto.CrearPresupuesto(presupuesto);
+        return RedirectToAction("Index");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

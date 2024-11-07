@@ -1,0 +1,20 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model Presupuesto
+
+<form asp-controller="Producto" asp-action="CrearPresupuesto">
+    <article>
+        <label asp-for="@Model.NombreDestinatario">Nombre: </label>
+        <input asp-for="@Model.NombreDestinatario">
+    </article>
+    <article>
+        <label asp-for="@Model.FechaCreacion">Fecha: </label>
+        <input asp-for="@Model.FechaCreacion">
+    </article>
+    <article>
+        <input type="submit" value="Registrar">
+    </article>
+</form>

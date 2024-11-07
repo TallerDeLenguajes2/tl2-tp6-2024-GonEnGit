@@ -35,7 +35,7 @@ public class ProductosController : Controller
     public IActionResult RegistrarProducto(Productos producto)
     {
         repoProducto.CargarNuevoProducto(producto);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index");   // intentaste cmabiar el return por View("RegistrarProducto"), mismo error
     }
 
 // es necesario que sea IAction y no solo Action?

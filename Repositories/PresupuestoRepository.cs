@@ -13,8 +13,8 @@ public class PresupuestoRepository
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
 
             comando.Parameters.Add(new SqliteParameter("@destinatario", presupuesto.NombreDestinatario));
             comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));

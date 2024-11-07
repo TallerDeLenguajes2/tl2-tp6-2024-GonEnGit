@@ -1,5 +1,6 @@
 namespace EspacioRepositorios;
 
+using System.Runtime.InteropServices;
 using EspacioModelos;
 using Microsoft.Data.Sqlite;
 
@@ -69,20 +70,18 @@ public class PresupuestoRepository
         }
     }
 
-// puede haber mas de un detalle con el mismo n° de presupuesto... esto debe estar mal
-// tendria que ser un delete aparentemente revisá
-    public void ActualizarDetalle(int idPresupuesto, int idProducto, int cantidad)
+    public void ActualizarPresupuesto(Presupuesto presupuesto)
     {
-        string consulta = "UPDATE PresupuestoDetalle SET idProducto = @idProducto, Cantidad = @cantidad WHERE idPresupuesto = @idPresupuesto";
+        string consulta = "UPDATE Presupuesto SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
 
-            comando.Parameters.Add(new SqliteParameter("@idProducto", idProducto));
-            comando.Parameters.Add(new SqliteParameter("@cantidad", cantidad));
-            comando.Parameters.Add(new SqliteParameter("@idPresupuesto", idPresupuesto));
+            comando.Parameters.Add(new SqliteParameter("@nombre", presupuesto.NombreDestinatario));
+            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
+            comando.Parameters.Add(new SqliteParameter("@id", presupuesto.IdPresupuesto));
 
             comando.ExecuteNonQuery();
             conexion.Close();

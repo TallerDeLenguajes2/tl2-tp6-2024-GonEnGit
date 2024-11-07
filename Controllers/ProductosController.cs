@@ -39,7 +39,7 @@ public class ProductosController : Controller
     }
 
 // es necesario que sea IAction y no solo Action?
-    [HttpPost]
+    [HttpPut]
     public IActionResult ActualizarProducto(Productos producto)
     {
         /*List<Productos> lista = repoProducto.ListarProductos(); // hace falta? en el ejemplo no trae la lista

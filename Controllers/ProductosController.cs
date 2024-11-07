@@ -24,15 +24,34 @@ public class ProductosController : Controller
 // aquí pones una metodo que llame al nombre del archivo
 // y retorne el metodo View()
 // dentro de estos metodos usas los controllers de cada cosa
+    [HttpGet("ListarProductos")]
     public IActionResult Index()
     {
         List<Productos> lista = repoProducto.ListarProductos();
         return View(lista);
     }
 
+    [HttpPost]
     public IActionResult RegistrarProducto(Productos producto)
     {
         repoProducto.CargarNuevoProducto(producto);
+        return RedirectToAction("Index");
+    }
+
+// es necesario que sea IAction y no solo Action?
+    [HttpPost]
+    public IActionResult ActualizarProducto(Productos producto)
+    {
+        /*List<Productos> lista = repoProducto.ListarProductos(); // hace falta? en el ejemplo no trae la lista
+        Productos productoActualizado = lista.FirstOrDefault(prod => prod.Id == producto.Id);
+
+        productoActualizado.Descripcion = producto.Descripcion;
+        productoActualizado.Precio = producto.Precio;
+        
+        // por como está tu metodo, esto no deberia hacer falta
+        */
+
+        repoProducto.ActualizarProducto(producto.Id, producto.Descripcion, producto.Precio);
         return RedirectToAction("Index");
     }
 

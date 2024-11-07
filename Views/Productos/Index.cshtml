@@ -3,7 +3,6 @@
 @using tl2_tp6_2024_GonEnGit.Models
 @using EspacioModelos
 
-
 @model List<Productos>
 
 
@@ -29,4 +28,7 @@
             }
         </tbody>
     </table>
+    <article>
+        <a class="btn" asp-controller="Productos" asp-action="RegistrarProducto">Cargar Producto Nuevo</a>
+    </article>
 </div>

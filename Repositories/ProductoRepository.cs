@@ -7,24 +7,19 @@ using Microsoft.Data.Sqlite;
 
 public class ProductoRepository
 {
-// esta cadena de conexion es parte de la clase no de los metodos
-    string cadenaDeConexion = "Data Source = db\\Tienda.db";
+    string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
-// metodos, cada uno lleva su consulta pre armada
-    public void CargarNuevoProducto(Productos producto)
+    public void CargarNuevoProducto(Productos producto) // esto te esta dando un error 405
     {
     // no te comas las @, estan para mapear los atributos mas abajo
-        string consulta = @"INSERT INTO Productos(Descripcion, Precio) VALUES (@Descripcion, @Precio)";
+        string consulta = @"INSERT INTO Productos(Descripcion, Precio) VALUES (@desc, @precio)";
 
-    // a esto lo podes seguir como está en la teoria
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            var comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
-        // esto mencionaron en la teoria, 'Parameters' lo usas
-        // para ligar el parametro del query con el valor que corresponda
-            comando.Parameters.Add(new SqliteParameter("@Descripcion", producto.Descripcion));
-            comando.Parameters.Add(new SqliteParameter("@Precio", producto.Precio));
+            comando.Parameters.Add(new SqliteParameter("@desc", producto.Descripcion));
+            comando.Parameters.Add(new SqliteParameter("@precio", producto.Precio));
             comando.ExecuteNonQuery();
             conexion.Close();
         }
@@ -79,8 +74,6 @@ public class ProductoRepository
     {
         List<int> listaId = new List<int>();
 
-    // parece que no se puede usar parameter con nombre de tablas, pregunta si está bien esto
-    // así la funcion podrias usarse siempre que haga falta sin importar la tabla
         string consulta = $"SELECT {campo} FROM {tabla}";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))

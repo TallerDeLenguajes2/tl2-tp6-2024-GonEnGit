@@ -13,15 +13,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-// todas la views van a ser archivos dentro de Views,
-// aquí pones una metodo que llame al nombre del archivo
-// y retorne el metodo View()
     public IActionResult Index()
     {
         return View();
     }
 
-// dentro de estos modesl haces los controllers de cada cosa
     public IActionResult Privacy()
     {
         return View();

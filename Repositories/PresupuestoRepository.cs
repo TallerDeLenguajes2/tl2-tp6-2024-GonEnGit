@@ -1,8 +1,6 @@
 namespace EspacioRepositorios;
 
 using EspacioModelos;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 
 public class PresupuestoRepository
@@ -72,6 +70,7 @@ public class PresupuestoRepository
     }
 
 // puede haber mas de un detalle con el mismo n° de presupuesto... esto debe estar mal
+// tendria que ser un delete aparentemente revisá
     public void ActualizarDetalle(int idPresupuesto, int idProducto, int cantidad)
     {
         string consulta = "UPDATE PresupuestoDetalle SET idProducto = @idProducto, Cantidad = @cantidad WHERE idPresupuesto = @idPresupuesto";

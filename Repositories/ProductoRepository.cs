@@ -52,7 +52,7 @@ public class ProductoRepository
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
-            using(SqliteDataReader lector = comando.ExecuteReader())
+            using(SqliteDataReader lector = comando.ExecuteReader())    // me parece que hay un error en el orden
             {
                 while (lector.Read())
                 {
@@ -70,6 +70,21 @@ public class ProductoRepository
         }
     }
 
+    public void BorrarProducto(int id)
+    {
+        string consulta = @"DELETE FROM Productos WHERE idProducto = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+            comando.Parameters.Add(new SqliteParameter("@id", id));
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
+// esto es solo para listar los id de productos
     public List<int> ObtenerListaId(string campo, string tabla)
     {
         List<int> listaId = new List<int>();

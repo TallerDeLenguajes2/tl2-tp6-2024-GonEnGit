@@ -5,7 +5,7 @@ using Microsoft.Data.Sqlite;
 
 public class PresupuestoRepository
 {
-    string cadenaDeConexion = "Data Source = db\\Tienda.db";
+    string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
     public void CrearPresupuesto(Presupuesto presupuesto)
     {

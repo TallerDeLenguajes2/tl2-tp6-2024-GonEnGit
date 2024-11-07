@@ -55,6 +55,14 @@ public class ProductosController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpDelete]
+    public IActionResult BorrarProducto(int id)
+    {
+        repoProducto.BorrarProducto(id);
+        return RedirectToAction("Index");
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

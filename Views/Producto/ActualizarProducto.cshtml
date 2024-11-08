@@ -1,0 +1,23 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model Producto
+
+<!-- asp-controller indica que model se llama -->
+<!-- asp-action indica que metodo de ese model se llama -->
+
+<form asp-controller="Producto" asp-action="ActualizarProducto">
+    <article>
+        <label asp-for="@Model.Descripcion">Descripcion del producto: </label>
+        <input asp-for="@Model.Descripcion">
+    </article>
+    <article>
+        <label asp-for="@Model.Precio">Precio</label>
+        <input asp-for="@Model.Precio">
+    </article>
+    <article>
+        <input type="submit" value="Registrar">
+    </article>
+</form>

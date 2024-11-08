@@ -56,16 +56,25 @@ public class ProductoController : Controller
     }
 // ------
 
-    [HttpPut]
+// ----
+    [HttpGet]
+    public IActionResult ActualizarProducto(int id)
+    {
+        List<Producto> lista = repoProducto.ListarProducto();
+        return View(lista.FirstOrDefault(producto => producto.Id == id));
+    }
+
+    [HttpPost]
     public IActionResult ActualizarProducto(Producto producto)
     {
-        repoProducto.ActualizarProducto(producto.Id, producto.Descripcion, producto.Precio);
+        repoProducto.ActualizarProducto(producto);
         return RedirectToAction("Index");
     }
+// ----
 
 // algo que te apareció en el quiz, no hace falta explicitar el View
 // po nombre si el View tiene el mismo nombre del metodo
-    [HttpDelete]
+   [HttpGet]
     public IActionResult BorrarProducto(int id)
     {
         repoProducto.BorrarProducto(id);

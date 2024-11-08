@@ -15,6 +15,8 @@
                 <td>Id</td>
                 <td>Descripcion</td>
                 <td>Precio</td>
+                <td>Actualizar</td>
+                <td>Borrar</td>
             </tr>
         </thead>
         <tbody>
@@ -24,12 +26,25 @@
                     <td>@prod.Id</td>
                     <td>@prod.Descripcion</td>
                     <td>$ @prod.Precio</td>
+                    <td>
+                    <!-- cuidado con los labels de asp, en el 'asp-route-X' -->
+                    <!-- X es el nombre de la variable como la estas usando -->
+                    <!-- osea, con el nombre como llega al View -->
+                        <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
+                            Act
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
+                        onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+                            Borrar
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
     <article class="d-flex justify-content-around">
         <a class="btn btn-outline-info bg-dark" asp-controller="Producto" asp-action="RegistrarProducto">Cargar Producto Nuevo</a>
-        <a class="btn btn-outline-warning bg-dark" asp-controller="Producto" asp-action="" disabled>Actualizar Producto</a>
     </article>
 </div>

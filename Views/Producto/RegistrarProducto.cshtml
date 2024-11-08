@@ -3,8 +3,12 @@
 
 @using EspacioModelos
 
-@model Productos
+@model Producto
 
+<!-- asp-controller indica que model se llama -->
+<!-- asp-action indica que metodo de ese model se llama -->
+
+<!-- cuidado con esta bendita s en Producto lo unico que hace es dar problemas -->
 <form asp-controller="Producto" asp-action="RegistrarProducto">
     <article>
         <label asp-for="@Model.Descripcion">Descripcion del producto: </label>

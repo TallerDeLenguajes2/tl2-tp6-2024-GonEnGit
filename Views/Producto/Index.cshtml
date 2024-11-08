@@ -3,12 +3,12 @@
 @using tl2_tp6_2024_GonEnGit.Models
 @using EspacioModelos
 
-@model List<Productos>
+@model List<Producto>
 
 
 <!-- Ctr + c termina la ejecucion del proyecto -->
 <div class="text-center container-fluid">
-    <h1 class="display-6">Productos Disponibles</h1>
+    <h1 class="display-6">Producto Disponibles</h1>
     <table class="table table-striped table-secondary">
         <thead>
             <tr>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Productos prod in Model)
+            @foreach (Producto prod in Model)
             {
                 <tr>
                     <td>@prod.Id</td>
@@ -29,7 +29,7 @@
         </tbody>
     </table>
     <article class="d-flex justify-content-around">
-        <a class="btn btn-outline-info bg-dark" asp-controller="Productos" asp-action="RegistrarProducto">Cargar Producto Nuevo</a>
-        <a class="btn btn-outline-warning bg-dark" asp-controller="Productos" asp-action="" disabled>Actualizar Producto</a>
+        <a class="btn btn-outline-info bg-dark" asp-controller="Producto" asp-action="RegistrarProducto">Cargar Producto Nuevo</a>
+        <a class="btn btn-outline-warning bg-dark" asp-controller="Producto" asp-action="" disabled>Actualizar Producto</a>
     </article>
 </div>

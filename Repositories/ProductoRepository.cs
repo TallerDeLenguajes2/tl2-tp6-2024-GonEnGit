@@ -9,7 +9,7 @@ public class ProductoRepository
 {
     string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
-    public void CargarNuevoProducto(Productos producto) // esto te esta dando un error 405
+    public void CargarNuevoProducto(Producto producto) // esto te esta dando un error 405
     {
     // no te comas las @, estan para mapear los atributos mas abajo
         string consulta = @"INSERT INTO Productos(Descripcion, Precio) VALUES (@desc, @precio)";
@@ -27,7 +27,7 @@ public class ProductoRepository
 
     public void ActualizarProducto(int id, string descripcion, double precio)
     {
-        string consulta = @"UPDATE productos SET Descripcion = @descripcion, Precio = @precio WHERE idProducto = @id";
+        string consulta = @"UPDATE Productos SET Descripcion = @descripcion, Precio = @precio WHERE idProducto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -43,9 +43,9 @@ public class ProductoRepository
         }
     }
 
-    public List<Productos> ListarProductos()
+    public List<Producto> ListarProducto()
     {
-        List<Productos> lista = new List<Productos>();
+        List<Producto> lista = new List<Producto>();
         string consulta = @"SELECT * FROM Productos";
 
         using(SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
@@ -56,7 +56,7 @@ public class ProductoRepository
             {
                 while (lector.Read())
                 {
-                    Productos productoLeido = new Productos();
+                    Producto productoLeido = new Producto();
                     productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
                     productoLeido.Descripcion = lector["Descripcion"].ToString();
                     productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
@@ -84,7 +84,7 @@ public class ProductoRepository
         }
     }
 
-// esto es solo para listar los id de productos
+// esto es solo para listar los id de Producto
     public List<int> ObtenerListaId(string campo, string tabla)
     {
         List<int> listaId = new List<int>();

@@ -9,12 +9,12 @@ using EspacioRepositorios;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
-public class ProductosController : Controller
+public class ProductoController : Controller
 {
-    private readonly ILogger<ProductosController> _logger;
+    private readonly ILogger<ProductoController> _logger;
     private ProductoRepository repoProducto;
 
-    public ProductosController(ILogger<ProductosController> logger)
+    public ProductoController(ILogger<ProductoController> logger)
     {
         _logger = logger;
         repoProducto = new ProductoRepository();
@@ -24,25 +24,32 @@ public class ProductosController : Controller
 // aquí pones una metodo que llame al nombre del archivo
 // y retorne el metodo View()
 // dentro de estos metodos usas los controllers de cada cosa
-    [HttpGet("ListarProductos")]
+    [HttpGet("ListarProducto")]
     public IActionResult Index()
     {
-        List<Productos> lista = repoProducto.ListarProductos();
+        List<Producto> lista = repoProducto.ListarProducto();
         return View(lista);
     }
 
 // ----- Pudiste preguntar como solucionar el error 405
 // ----- resulta que necesitas usar un GET antes del POST
 // ----- de esa forma evitas que te diga que los metodos no coinciden
+
+    // ----- Acá lo que tenes es un metodo GET que crea un producto vacio
+    // ----- toma los datos del formulario para ponerlos en el objeto nuevo
     [HttpGet]
     public IActionResult RegistrarProducto()
     {
-        Productos nuevoProducto = new Productos();
-        return View(nuevoProducto);
+    // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
+        return View(new Producto());
     }
 
+    // ----- NOTA: fijate que los 2 controllers tienen el mismo nombre
+
+    // ----- y un POST que resive el objeto cargado y lo envia
+    // ----- a la db usando el metodo RegistrarProducto
     [HttpPost]
-    public IActionResult RegistrarProducto(Productos producto)
+    public IActionResult RegistrarProducto(Producto producto)
     {
         repoProducto.CargarNuevoProducto(producto);
         return RedirectToAction("Index");
@@ -50,12 +57,14 @@ public class ProductosController : Controller
 // ------
 
     [HttpPut]
-    public IActionResult ActualizarProducto(Productos producto)
+    public IActionResult ActualizarProducto(Producto producto)
     {
         repoProducto.ActualizarProducto(producto.Id, producto.Descripcion, producto.Precio);
         return RedirectToAction("Index");
     }
 
+// algo que te apareció en el quiz, no hace falta explicitar el View
+// po nombre si el View tiene el mismo nombre del metodo
     [HttpDelete]
     public IActionResult BorrarProducto(int id)
     {

@@ -1,7 +1,7 @@
 
 namespace EspacioModelos;
 
-public class Productos
+public class Producto
 {
     private int id;
     private string descripcion;

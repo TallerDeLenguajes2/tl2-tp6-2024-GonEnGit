@@ -5,9 +5,9 @@
 
 @model List<Presupuesto>
 
-<div class="text-center">
-    <h1 class="display-4">Esto es Presupuestos</h1>
-    <table>
+<div class="container-fluid text-center">
+    <h1 class="display-6">Presupuestos Registrados</h1>
+    <table class="table table-striped table-success">
         <thead>
             <tr>
                 <td>Id</td>
@@ -26,4 +26,8 @@
             }
         </tbody>
     </table>
+    <article class="d-flex justify-content-around">
+        <a class="btn btn-outline-info bg-dark" asp-controller="Presupuesto" asp-action="CrearPresupuesto">Agregar Presupuesto</a>
+        <a class="btn btn-outline-warning bg-dark" asp-controller="Presupuesto" asp-action="ActualizarPresupuesto">Actualizar Presupuesto</a>
+    </article>
 </div>

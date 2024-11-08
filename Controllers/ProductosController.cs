@@ -31,26 +31,27 @@ public class ProductosController : Controller
         return View(lista);
     }
 
+// ----- Pudiste preguntar como solucionar el error 405
+// ----- resulta que necesitas usar un GET antes del POST
+// ----- de esa forma evitas que te diga que los metodos no coinciden
+    [HttpGet]
+    public IActionResult RegistrarProducto()
+    {
+        Productos nuevoProducto = new Productos();
+        return View(nuevoProducto);
+    }
+
     [HttpPost]
     public IActionResult RegistrarProducto(Productos producto)
     {
         repoProducto.CargarNuevoProducto(producto);
-        return RedirectToAction("Index");   // intentaste cmabiar el return por View("RegistrarProducto"), mismo error
+        return RedirectToAction("Index");
     }
+// ------
 
-// es necesario que sea IAction y no solo Action?
     [HttpPut]
     public IActionResult ActualizarProducto(Productos producto)
     {
-        /*List<Productos> lista = repoProducto.ListarProductos(); // hace falta? en el ejemplo no trae la lista
-        Productos productoActualizado = lista.FirstOrDefault(prod => prod.Id == producto.Id);
-
-        productoActualizado.Descripcion = producto.Descripcion;
-        productoActualizado.Precio = producto.Precio;
-        
-        // por como está tu metodo, esto no deberia hacer falta
-        */
-
         repoProducto.ActualizarProducto(producto.Id, producto.Descripcion, producto.Precio);
         return RedirectToAction("Index");
     }

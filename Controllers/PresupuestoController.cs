@@ -22,41 +22,53 @@ public class PresupuestoController : Controller
 // aquí pones una metodo que llame al nombre del archivo
 // y retorne el metodo View()
 // dentro de estos metodos usas los controllers de cada cosa
-    [HttpGet]
+    [HttpGet("ConsultarPresupuesto")]
     public IActionResult Index()
     {
         List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
         return View(lista);
     }
 
-    [HttpGet]
+// ----
+    [HttpGet("CrearPresupuesto")]
     public IActionResult CrearPresupuesto()
     {
-        Presupuesto nuevoPresupuesto = new Presupuesto();
-        return View(nuevoPresupuesto);
+        return View(new Presupuesto());
     }
-    [HttpPost]
+
+    [HttpPost("CrearPresupuesto")]
     public IActionResult CrearPresupuesto(Presupuesto presupuesto)
     {
         repoPresupuesto.CrearPresupuesto(presupuesto);
         return RedirectToAction("Index");
     }
+// ----
 
-    [HttpPut]
+
+// ----
+    [HttpGet("ActualizarPresupuesto")]
+    public IActionResult ActualizarPresupuesto(int id)
+    {
+        List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
+        return View(lista.FirstOrDefault(presupuesto => presupuesto.IdPresupuesto == id));
+    }
+
+    [HttpPost("ActualizarPresupuesto")]
     public IActionResult ActualizarPresupuesto(Presupuesto presupuesto)
     {
         repoPresupuesto.ActualizarPresupuesto(presupuesto);
         return RedirectToAction("Index");
     }
+// ----
 
-    [HttpDelete]
+    [HttpDelete("BorrarPresupuesto")]
     public IActionResult BorrarPresupuesto(int id)
     {
         repoPresupuesto.BorrarPresupuesto(id);
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
+    [HttpPost("AgregarDetalle")]
     public IActionResult AgregarDetalle(int idPres, int idProd, int cant)
     {
         repoPresupuesto.AgregarDetalle(idPres, idProd, cant);

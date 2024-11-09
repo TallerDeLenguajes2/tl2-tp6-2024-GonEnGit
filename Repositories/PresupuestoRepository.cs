@@ -72,7 +72,7 @@ public class PresupuestoRepository
 
     public void ActualizarPresupuesto(Presupuesto presupuesto)
     {
-        string consulta = "UPDATE Presupuesto SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
+        string consulta = "UPDATE Presupuestos SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {

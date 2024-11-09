@@ -13,6 +13,8 @@
                 <td>Id</td>
                 <td>Descripcion</td>
                 <td>Precio</td>
+                <td>Actualizar</td>
+                <td>Borrar</td>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +24,16 @@
                     <td>@presupuesto.IdPresupuesto</td>
                     <td>@presupuesto.NombreDestinatario</td>
                     <td>@presupuesto.FechaCreacion</td>
+                    <td>
+                        <a asp-controller="Presupuesto" asp-action="ActualizarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto">
+                            Act
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Presupuesto" asp-action="BorrarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto">
+                            Borrar
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>

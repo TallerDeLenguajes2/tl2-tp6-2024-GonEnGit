@@ -52,7 +52,8 @@ public class ProductoRepository
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
-            using(SqliteDataReader lector = comando.ExecuteReader())    // me parece que hay un error en el orden
+
+            using(SqliteDataReader lector = comando.ExecuteReader())
             {
                 while (lector.Read())
                 {
@@ -60,7 +61,6 @@ public class ProductoRepository
                     productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
                     productoLeido.Descripcion = lector["Descripcion"].ToString();
                     productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
-
                     lista.Add(productoLeido);
                 }
             }

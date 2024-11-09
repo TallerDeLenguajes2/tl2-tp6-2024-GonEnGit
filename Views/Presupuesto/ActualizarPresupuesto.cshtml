@@ -1,0 +1,25 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model Presupuesto
+
+<!-- asp-controller indica que model se llama -->
+<!-- asp-action indica que metodo de ese model se llama -->
+
+<form asp-controller="Presupuesto" asp-action="ActualizarPresupuesto">
+    <!-- No estoy seguro de si era así, pero estó soluciona el envio del id para la actualizacion -->
+    <input type="hidden" asp-for="@Model.IdPresupuesto">
+    <article>
+        <label asp-for="@Model.NombreDestinatario">Nombre: </label>
+        <input asp-for="@Model.NombreDestinatario">
+    </article>
+    <article>
+        <label asp-for="@Model.FechaCreacion">Fecha: </label>
+        <input asp-for="@Model.FechaCreacion">
+    </article>
+    <article>
+        <input type="submit" value="Actualizar">
+    </article>
+</form>

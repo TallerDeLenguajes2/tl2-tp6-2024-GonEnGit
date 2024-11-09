@@ -20,6 +20,7 @@ public class ProductoController : Controller
         repoProducto = new ProductoRepository();
     }
 
+
 // todas la views van a ser archivos dentro de Views,
 // aquí pones una metodo que llame al nombre del archivo
 // y retorne el metodo View()
@@ -31,13 +32,14 @@ public class ProductoController : Controller
         return View(lista);
     }
 
+
 // ----- Pudiste preguntar como solucionar el error 405
 // ----- resulta que necesitas usar un GET antes del POST
 // ----- de esa forma evitas que te diga que los metodos no coinciden
 
     // ----- Acá lo que tenes es un metodo GET que crea un producto vacio
     // ----- toma los datos del formulario para ponerlos en el objeto nuevo
-    [HttpGet]
+    [HttpGet("RegistrarProducto")]
     public IActionResult RegistrarProducto()
     {
     // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
@@ -48,7 +50,7 @@ public class ProductoController : Controller
 
     // ----- y un POST que resive el objeto cargado y lo envia
     // ----- a la db usando el metodo RegistrarProducto
-    [HttpPost]
+    [HttpPost("RegistrarProducto")]
     public IActionResult RegistrarProducto(Producto producto)
     {
         repoProducto.CargarNuevoProducto(producto);
@@ -56,15 +58,16 @@ public class ProductoController : Controller
     }
 // ------
 
+
 // ----
-    [HttpGet]
+    [HttpGet("ActualizarProducto")]
     public IActionResult ActualizarProducto(int id)
     {
         List<Producto> lista = repoProducto.ListarProducto();
         return View(lista.FirstOrDefault(producto => producto.Id == id));
     }
 
-    [HttpPost]
+    [HttpPost("ActualizarProducto")]
     public IActionResult ActualizarProducto(Producto producto)
     {
         repoProducto.ActualizarProducto(producto);
@@ -72,9 +75,10 @@ public class ProductoController : Controller
     }
 // ----
 
+
 // algo que te apareció en el quiz, no hace falta explicitar el View
 // po nombre si el View tiene el mismo nombre del metodo
-   [HttpGet]
+    [HttpGet("BorrarProducto")]
     public IActionResult BorrarProducto(int id)
     {
         repoProducto.BorrarProducto(id);

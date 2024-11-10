@@ -77,14 +77,15 @@ public class ProductoController : Controller
 
 
 // algo que te apareció en el quiz, no hace falta explicitar el View
-// po nombre si el View tiene el mismo nombre del metodo
+// por nombre si el View tiene el mismo nombre del metodo
+// ----
     [HttpGet("BorrarProducto")]
     public IActionResult BorrarProducto(int id)
     {
         repoProducto.BorrarProducto(id);
         return RedirectToAction("Index");
     }
-
+// ----
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

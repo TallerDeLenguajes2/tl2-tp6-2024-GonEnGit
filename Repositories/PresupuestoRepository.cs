@@ -11,19 +11,17 @@ public class PresupuestoRepository
     public List<Presupuesto> ConsultarPresupuestosPrueba()
     {
         List<Presupuesto> lista = new List<Presupuesto>();
-// C# es mas estricto con SQL, cuando usas USING, el atributo tiene que estar entre parentesis
-// igual que lo estas haciendo en bases, cuando usas ON parece que los parentesis no hacen falta
-// pero igualmente tendrias que usar 'ON Presupuestos.idPresupuesto = ...'
+
+    // una nota sobre esto al final * -------------------------
         string consulta =   "SELECT idPresupuesto, NombreDestinatario, FechaCreacion, idProducto, cantidad, descripcion, precio " +
                             "FROM Presupuestos " +
-                            "INNER JOIN PresupuestosDetalle USING (idPresupuesto) " +
-                            "INNER JOIN Productos USING (idProducto)";
+                            "LEFT JOIN PresupuestosDetalle USING (idPresupuesto) " +
+                            "LEFT JOIN Productos USING (idProducto)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
-
             using (SqliteDataReader lector = comando.ExecuteReader())
             {
                 while(lector.Read())
@@ -36,18 +34,26 @@ public class PresupuestoRepository
                         presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
                         presupuestoLeido.NombreDestinatario = lector["NombreDestinatario"].ToString();
                         presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
-                    // no está inicializada en el model
+
+                        presupuestoLeido.Cantidades = new List<int>();         // no estan inicializadas en el model
                         presupuestoLeido.Productos = new List<Producto>();
 
                         lista.Add(presupuestoLeido);
                     }
-                    Presupuesto pesupuestoLeido = lista.FirstOrDefault(presu => presu.IdPresupuesto == idPresupuestoDB);
 
-                    Producto productoLeido = new Producto();
-                    productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
-                    productoLeido.Descripcion = lector["Descripcion"].ToString();
-                    productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
-                    pesupuestoLeido.Productos.Add(productoLeido);
+                // una nota sobre esto al final ** -------------------------
+                    if (lector["idProducto"] != DBNull.Value)
+                    {
+                    // agregas la cantidad, los ordenes de las listas van a coincidir
+                        Presupuesto pesupuestoLeido = lista.FirstOrDefault(presu => presu.IdPresupuesto == idPresupuestoDB);
+                        pesupuestoLeido.Cantidades.Add(Convert.ToInt32(lector["cantidad"]));
+                    // creas y guardas el producto
+                        Producto productoLeido = new Producto();
+                        productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
+                        productoLeido.Descripcion = lector["Descripcion"].ToString();
+                        productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
+                        pesupuestoLeido.Productos.Add(productoLeido);
+                    }
                 }
             }
             conexion.Close();
@@ -55,7 +61,6 @@ public class PresupuestoRepository
 
         return lista;
     }
-
 
     public List<Presupuesto> ConsultarPresupuestos()
     {
@@ -167,3 +172,23 @@ public class PresupuestoRepository
         }
     }
 }
+
+/*
+
+/ --- * --- /
+C# es mas estricto con SQL, cuando usas USING, el atributo tiene que estar entre parentesis
+igual que lo estas haciendo en bases, cuando usas ON parece que los parentesis no hacen falta
+pero igualmente tendrias que usar 'ON Presupuestos.idPresupuesto = ...'
+
+/ --- ** --- /
+Parece que te da un problema para tratar de signar un valor nulo
+'InvalidCastException: Object cannot be cast from DBNull to other types.'
+osea, no podes convertir un null a un int, esto es por el LEFT JOIN...
+existe una clase DBNull, podes usarla como valor?
+
+Segun encontraste DBNull es unico, osea, existe una sola instancia en todo momento
+como estas usando un lecto y tratas los datos linea por linea no hay problema
+podes usar el metodo DBNull.value para hacer comparaciones usando este valor nulo
+el 'null' parece que trae problemas a veces...
+
+*/

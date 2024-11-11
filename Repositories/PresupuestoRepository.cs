@@ -8,7 +8,7 @@ public class PresupuestoRepository
 {
     string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
-    public List<Presupuesto> ConsultarPresupuestosPrueba()
+    public List<Presupuesto> ConsultarPresupuestos()
     {
         List<Presupuesto> lista = new List<Presupuesto>();
 
@@ -60,33 +60,6 @@ public class PresupuestoRepository
         }
 
         return lista;
-    }
-
-    public List<Presupuesto> ConsultarPresupuestos()
-    {
-        List<Presupuesto> lista = new List<Presupuesto>();
-        string consulta = "SELECT * FROM Presupuestos";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-
-            using (SqliteDataReader lector = comando.ExecuteReader())
-            {
-                while (lector.Read())
-                {
-                    Presupuesto presupuestoLeido = new Presupuesto();
-                    presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
-                    presupuestoLeido.NombreDestinatario = lector["NombreDestinatario"].ToString();
-                    presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
-                    lista.Add(presupuestoLeido);
-                }
-            }
-            conexion.Close();
-
-            return lista;
-        }
     }
 
     public void CrearPresupuesto(Presupuesto presupuesto)

@@ -31,6 +31,16 @@ public class PresupuestoController : Controller
     }
 // ----
 
+// ----
+    [HttpGet("Prueba")]
+    public IActionResult Prueba()
+    {
+        List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestosPrueba();
+        return View(lista);
+    }
+
+// ----
+
 
 // ----
     [HttpGet("CrearPresupuesto")]

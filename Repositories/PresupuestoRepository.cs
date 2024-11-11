@@ -8,22 +8,54 @@ public class PresupuestoRepository
 {
     string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
-    public void CrearPresupuesto(Presupuesto presupuesto)
+    public List<Presupuesto> ConsultarPresupuestosPrueba()
     {
-        string consulta = @"INSERT INTO Presupuestos(NombreDestinatario, FechaCreacion) VALUES (@destinatario, @fecha)";
+        List<Presupuesto> lista = new List<Presupuesto>();
+// C# es mas estricto con SQL, cuando usas USING, el atributo tiene que estar entre parentesis
+// igual que lo estas haciendo en bases, cuando usas ON parece que los parentesis no hacen falta
+// pero igualmente tendrias que usar 'ON Presupuestos.idPresupuesto = ...'
+        string consulta =   "SELECT idPresupuesto, NombreDestinatario, FechaCreacion, idProducto, cantidad, descripcion, precio " +
+                            "FROM Presupuestos " +
+                            "INNER JOIN PresupuestosDetalle USING (idPresupuesto) " +
+                            "INNER JOIN Productos USING (idProducto)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
-            conexion.Open();
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
 
-            comando.Parameters.Add(new SqliteParameter("@destinatario", presupuesto.NombreDestinatario));
-            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
+            using (SqliteDataReader lector = comando.ExecuteReader())
+            {
+                while(lector.Read())
+                {
+                    int idPresupuestoDB = Convert.ToInt32(lector["idPresupuesto"]);
 
-            comando.ExecuteNonQuery();
+                    if (lista.FirstOrDefault(presu => presu.IdPresupuesto == idPresupuestoDB) == null)
+                    {
+                        Presupuesto presupuestoLeido = new Presupuesto();
+                        presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
+                        presupuestoLeido.NombreDestinatario = lector["NombreDestinatario"].ToString();
+                        presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
+                    // no está inicializada en el model
+                        presupuestoLeido.Productos = new List<Producto>();
+
+                        lista.Add(presupuestoLeido);
+                    }
+                    Presupuesto pesupuestoLeido = lista.FirstOrDefault(presu => presu.IdPresupuesto == idPresupuestoDB);
+
+                    Producto productoLeido = new Producto();
+                    productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
+                    productoLeido.Descripcion = lector["Descripcion"].ToString();
+                    productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
+                    pesupuestoLeido.Productos.Add(productoLeido);
+                }
+            }
             conexion.Close();
         }
+
+        return lista;
     }
+
 
     public List<Presupuesto> ConsultarPresupuestos()
     {
@@ -49,6 +81,23 @@ public class PresupuestoRepository
             conexion.Close();
 
             return lista;
+        }
+    }
+
+    public void CrearPresupuesto(Presupuesto presupuesto)
+    {
+        string consulta = @"INSERT INTO Presupuestos(NombreDestinatario, FechaCreacion) VALUES (@destinatario, @fecha)";
+
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            conexion.Open();
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+
+            comando.Parameters.Add(new SqliteParameter("@destinatario", presupuesto.NombreDestinatario));
+            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
+
+            comando.ExecuteNonQuery();
+            conexion.Close();
         }
     }
 

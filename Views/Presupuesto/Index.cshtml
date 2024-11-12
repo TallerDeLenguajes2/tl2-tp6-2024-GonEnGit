@@ -5,7 +5,7 @@
 
 @model List<Presupuesto>
 
-<h1 class="display-6">Prueba Index</h1>
+<h1 class="px-3 display-6">Presupuestos</h1>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 @foreach (Presupuesto presupuesto in Model)
 {
@@ -15,6 +15,7 @@
                 <tr>
                     <td class="col-sm-1">Actualizar</td>
                     <td class="col-sm-1">Borrar</td>
+                    <td class="col-sm-1">+ Producto</td>
                     <td class="col-sm-1">Id</td>
                     <td class="col-sm-2">Nombre</td>
                     <td class="col-sm-1">Fecha Alta</td>
@@ -36,6 +37,11 @@
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>
+                    <td>
+                        <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@presupuesto.IdPresupuesto">
+                            <i class="bi bi-bag-plus"></i>
+                        </a>
+                    </td>
                     <td>@presupuesto.IdPresupuesto</td>
                     <td>@presupuesto.NombreDestinatario</td>
                     <td>@presupuesto.FechaCreacion</td>
@@ -43,20 +49,22 @@
                     {
                         <td class="p-0 px-1">
                             <table class="m-0 table table-striped table-success table-hover">
-                                <thead>
+                            <!--<thead>
                                     <tr>
                                         <td>Id</td>
                                         <td>Descripcion</td>
                                         <td>Precio</td>
+                                        <td>Cantidad</td>
                                     </tr>
-                                </thead>
+                                </thead>-->
                                 <tbody>
-                                    @foreach (Producto producto in presupuesto.Productos)
+                                    @for (int i = 0; i < presupuesto.Productos.Count(); i++)
                                     {
-                                        <tr>
-                                            <td>@producto.Id</td>
-                                            <td>@producto.Descripcion</td>
-                                            <td>$ @producto.Precio</td>
+                                        <tr>    <!-- El producto y la cantidad coinciden en indice -->
+                                            <!-- aquí estaba el id del producto -->
+                                            <td>@presupuesto.Productos[i].Descripcion</td>
+                                            <td>$ @presupuesto.Productos[i].Precio</td>
+                                            <td>@presupuesto.Cantidades[i]</td>
                                         </tr>
                                     }
                                 </tbody>

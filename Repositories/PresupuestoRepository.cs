@@ -12,6 +12,7 @@ public class PresupuestoRepository
     {
         List<Presupuesto> lista = new List<Presupuesto>();
 
+// ----
     // una nota sobre esto al final * -------------------------
         string consulta =   "SELECT idPresupuesto, NombreDestinatario, FechaCreacion, idProducto, cantidad, descripcion, precio " +
                             "FROM Presupuestos " +
@@ -61,7 +62,9 @@ public class PresupuestoRepository
 
         return lista;
     }
+// ----
 
+// ----
     public void CrearPresupuesto(Presupuesto presupuesto)
     {
         string consulta = @"INSERT INTO Presupuestos(NombreDestinatario, FechaCreacion) VALUES (@destinatario, @fecha)";
@@ -78,7 +81,9 @@ public class PresupuestoRepository
             conexion.Close();
         }
     }
+// ----
 
+// ----
     public void ActualizarPresupuesto(Presupuesto presupuesto)
     {
         string consulta = "UPDATE Presupuestos SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
@@ -96,7 +101,9 @@ public class PresupuestoRepository
             conexion.Close();
         }
     }
+// ----
 
+// ----
     public void BorrarPresupuesto(int id)
     {
         string consulta = @"DELETE FROM Presupuestos WHERE idPresupuesto = @id";
@@ -113,7 +120,8 @@ public class PresupuestoRepository
 
 // ---------
 
-    public void AgregarDetalle(int idPresupuesto, int idProducto, int cantidad)
+// ----
+    public void AgregarDetalle(PresupuestoDetalle detalle)
     {
         string consulta = @"INSERT INTO PresupuestosDetalle(idPresupuesto, idProducto, cantidad) VALUES (@idPres, @idProd, @cant)";
 
@@ -122,15 +130,17 @@ public class PresupuestoRepository
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
 
-            comando.Parameters.Add(new SqliteParameter("@idPres", idPresupuesto));
-            comando.Parameters.Add(new SqliteParameter("@idProd", idProducto));
-            comando.Parameters.Add(new SqliteParameter("@cant", cantidad));
+            comando.Parameters.Add(new SqliteParameter("@idPres", detalle.IdPresupuesto));
+            comando.Parameters.Add(new SqliteParameter("@idProd", detalle.IdProducto));
+            comando.Parameters.Add(new SqliteParameter("@cant", detalle.Cantidad));
 
             comando.ExecuteNonQuery();
             conexion.Close();
         }
     }
+// ----
 
+// ----
     public void BorrarDetalles(int id)
     {
         string consulta = @"DELETE FROM PresupuestosDetalle WHERE idPresupuesto = @id";
@@ -145,8 +155,11 @@ public class PresupuestoRepository
         }
     }
 }
+// ----
 
-/*
+
+
+/* NOTAS
 
 / --- * --- /
 C# es mas estricto con SQL, cuando usas USING, el atributo tiene que estar entre parentesis

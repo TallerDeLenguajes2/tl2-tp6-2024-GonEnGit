@@ -65,10 +65,22 @@ public class PresupuestoController : Controller
 
 
 // ----
-    [HttpPost("AgregarDetalle")]
-    public IActionResult AgregarDetalle(int idPres, int idProd, int cant)
+    [HttpGet("AgregarDetalle")]
+    public IActionResult AgregarDetalle(int id)
     {
-        repoPresupuesto.AgregarDetalle(idPres, idProd, cant);
+        ProductoRepository repoProducto = new ProductoRepository();
+        PresupuestoDetalle detalle = new PresupuestoDetalle();
+
+        detalle.IdPresupuesto = id;
+        detalle.Productos = repoProducto.ListarProducto();
+
+        return View(detalle);
+    }
+
+    [HttpPost("AgregarDetalle")]
+    public IActionResult AgregarDetalle(PresupuestoDetalle detalle)
+    {
+        repoPresupuesto.AgregarDetalle(detalle);
         return RedirectToAction("Index");
     }
 // ----

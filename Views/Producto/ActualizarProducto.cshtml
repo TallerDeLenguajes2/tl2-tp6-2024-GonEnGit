@@ -8,16 +8,19 @@
 <!-- asp-controller indica que model se llama -->
 <!-- asp-action indica que metodo de ese model se llama -->
 
-<form asp-controller="Producto" asp-action="ActualizarProducto">
-    <article>
-        <label asp-for="@Model.Descripcion">Descripcion del producto: </label>
-        <input asp-for="@Model.Descripcion">
-    </article>
-    <article>
-        <label asp-for="@Model.Precio">Precio</label>
-        <input asp-for="@Model.Precio">
-    </article>
-    <article>
-        <input type="submit" value="Actualizar">
-    </article>
-</form>
+<fieldset class="container border border-2 border-success rounded w-50">
+    <form asp-controller="Producto" asp-action="ActualizarProducto" class="p-2">
+        <legend>Actualizar Producto</legend>
+        <article class="form-group">
+            <label asp-for="@Model.Descripcion" class="form-label">Descripción del producto: </label>
+            <input asp-for="@Model.Descripcion" class="form-control">
+        </article>
+        <article class="my-2 form-group">
+            <label asp-for="@Model.Precio" class="form-label">Precio: </label>
+            <input asp-for="@Model.Precio" class="form-control">
+        </article>
+        <article class="p-3 d-flex justify-content-center">
+            <input type="submit" value="Actualizar" class="btn btn-primary">
+        </article>
+    </form>
+</fieldset>

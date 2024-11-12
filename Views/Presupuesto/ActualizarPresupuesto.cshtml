@@ -8,18 +8,25 @@
 <!-- asp-controller indica que model se llama -->
 <!-- asp-action indica que metodo de ese model se llama -->
 
-<form asp-controller="Presupuesto" asp-action="ActualizarPresupuesto">
-    <!-- No estoy seguro de si era así, pero estó soluciona el envio del id para la actualizacion -->
-    <input type="hidden" asp-for="@Model.IdPresupuesto">
-    <article>
-        <label asp-for="@Model.NombreDestinatario">Nombre: </label>
-        <input asp-for="@Model.NombreDestinatario">
-    </article>
-    <article>
-        <label asp-for="@Model.FechaCreacion">Fecha: </label>
-        <input asp-for="@Model.FechaCreacion">
-    </article>
-    <article>
-        <input type="submit" value="Actualizar">
-    </article>
-</form>
+<fieldset class="container border border-2 border-success rounded w-50">
+    <legend>Actualizar Presupuesto</legend>
+    <form asp-controller="Presupuesto" asp-action="ActualizarPresupuesto" class="p-2">
+        <!-- No estoy seguro de si era así, pero estó soluciona el envio del id para la actualizacion -->
+        <input type="hidden" asp-for="@Model.IdPresupuesto">
+        <article class="form-group">
+            <label asp-for="@Model.NombreDestinatario" class="form-label">
+                Nombre:
+            </label>
+            <input asp-for="@Model.NombreDestinatario" class="form-control">
+        </article>
+        <article class="my-2 form-group">
+            <label asp-for="@Model.FechaCreacion" class="form-label">
+                Fecha: 
+            </label>
+            <input asp-for="@Model.FechaCreacion" class="form-control">
+        </article>
+        <article class="p-3 d-flex justify-content-center">
+            <input type="submit" value="Actualizar" class="btn btn-primary">
+        </article>
+    </form>
+</fieldset>

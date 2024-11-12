@@ -7,74 +7,66 @@
 
 <h1 class="px-3 display-6">Presupuestos</h1>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
-@foreach (Presupuesto presupuesto in Model)
+@foreach (Presupuesto presu in Model)
 {
-    <div class="container-fluid text-center">
-        <table class="table table-striped table-bordered table-secondary align-middle">
-            <thead class="font-weight-bold">
-                <tr>
-                    <td class="col-sm-1">Actualizar</td>
-                    <td class="col-sm-1">Borrar</td>
-                    <td class="col-sm-1">+ Producto</td>
-                    <td class="col-sm-1">Id</td>
-                    <td class="col-sm-2">Nombre</td>
-                    <td class="col-sm-1">Fecha Alta</td>
-                    @if (presupuesto.Productos.Count() != 0)
-                    {
-                        <td colspan = "3">Productos</td>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <a asp-controller="Presupuesto" asp-action="ActualizarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-controller="Presupuesto" asp-action="BorrarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@presupuesto.IdPresupuesto">
-                            <i class="bi bi-bag-plus"></i>
-                        </a>
-                    </td>
-                    <td>@presupuesto.IdPresupuesto</td>
-                    <td>@presupuesto.NombreDestinatario</td>
-                    <td>@presupuesto.FechaCreacion</td>
-                    @if (presupuesto.Productos.Count() != 0)
-                    {
-                        <td class="p-0 px-1">
-                            <table class="m-0 table table-striped table-success table-hover">
-                            <!--<thead>
-                                    <tr>
-                                        <td>Id</td>
-                                        <td>Descripcion</td>
-                                        <td>Precio</td>
-                                        <td>Cantidad</td>
-                                    </tr>
-                                </thead>-->
-                                <tbody>
-                                    @for (int i = 0; i < presupuesto.Productos.Count(); i++)
-                                    {
-                                        <tr>    <!-- El producto y la cantidad coinciden en indice -->
-                                            <!-- aquí estaba el id del producto -->
-                                            <td>@presupuesto.Productos[i].Descripcion</td>
-                                            <td>$ @presupuesto.Productos[i].Precio</td>
-                                            <td>@presupuesto.Cantidades[i]</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </td>
-                    }
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="container-fluid text-center">
+    <table class="table table-striped table-bordered table-secondary align-middle">
+        <thead class="font-weight-bold">
+            <tr>
+                <td class="col-sm-1">Actualizar</td>
+                <td class="col-sm-1">Borrar</td>
+                <td class="col-sm-1">+ Producto</td>
+                <td class="col-sm-1">Id</td>
+                <td class="col-sm-2">Nombre</td>
+                <td class="col-sm-1">Fecha Alta</td>
+                @if (presu.Productos.Count() != 0)
+                {
+                <td colspan = "3">Productos</td>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a asp-controller="Presupuesto" asp-action="ActualizarPresupuesto" asp-route-id="@presu.IdPresupuesto">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Presupuesto" asp-action="BorrarPresupuesto" asp-route-id="@presu.IdPresupuesto"
+                    onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@presu.IdPresupuesto">
+                        <i class="bi bi-bag-plus"></i>
+                    </a>
+                </td>
+                <td>@presu.IdPresupuesto</td>
+                <td>@presu.NombreDestinatario</td>
+                <td>@presu.FechaCreacion</td>
+                @if (presu.Productos.Count() != 0)
+                {
+                <td class="p-0 px-1">
+                    <table class="m-0 table table-striped table-success table-hover">
+                        <tbody>
+                            @for (int i = 0; i < presu.Productos.Count(); i++)
+                            {
+                            <tr>    <!-- El producto y la cantidad coinciden en indice -->
+                                <td>@presu.Productos[i].Descripcion</td>
+                                <td>$ @presu.Productos[i].Precio</td>
+                                <td>@presu.Cantidades[i]</td>
+                            </tr>
+                            }   
+                        </tbody>
+                    </table>
+                </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
 }
 <article class="d-flex justify-content-around">
     <a class="btn btn-outline-info bg-dark" asp-controller="Presupuesto" asp-action="CrearPresupuesto">Agregar Presupuesto</a>

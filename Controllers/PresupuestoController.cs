@@ -63,6 +63,16 @@ public class PresupuestoController : Controller
     }
 // ----
 
+// ----
+    [HttpGet("BorrarPresupuesto")]
+    public IActionResult BorrarPresupuesto(int id)
+    {
+        repoPresupuesto.BorrarDetalles(id);
+        repoPresupuesto.BorrarPresupuesto(id);
+        return RedirectToAction("Index");
+    }
+// ----
+
 
 // ----
     [HttpGet("AgregarDetalle")]
@@ -87,17 +97,13 @@ public class PresupuestoController : Controller
 
 
 // ----
-    [HttpGet("BorrarPresupuesto")]
-    public IActionResult BorrarPresupuesto(int id)
-    {
-        repoPresupuesto.BorrarDetalles(id);
-        repoPresupuesto.BorrarPresupuesto(id);
-        return RedirectToAction("Index");
-    }
+    // no creo que se pueda borra los detalles de a 1 todavia...
+    // como identificas un detalle en particular? necesitas si o si
+    // los 3 valores, no tiene un idDetalle...
 // ----
 
 
-// se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una llista de productos
+// se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una lista de productos
 // traes todo con inner join y de ahí podes mostrar cada presupuesto con sus productos
 
 // esto no lo tocas todavia

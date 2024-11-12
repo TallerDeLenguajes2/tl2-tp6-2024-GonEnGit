@@ -42,22 +42,25 @@
             }
         </tbody>
     </table>
-    <form asp-controller="Presupuesto" asp-action="AgregarDetalle">
-        <article>
-            <label asp-for="@Model.IdPresupuesto">Presupuesto N°: </label>
-            <input asp-for="@Model.IdPresupuesto" readonly>
-            <!-- En teoria, readonly permite recibir del model pero no alterar por usuario -->
-        </article>
-        <article>
-            <label asp-for="@Model.IdProducto">Producto N°: </label>
-            <input asp-for="@Model.IdProducto">
-        </article>
-        <article>
-            <label asp-for="@Model.Cantidad">Cantidad: </label>
-            <input asp-for="@Model.Cantidad">
-        </article>
-        <article>
-            <input type="submit" value="Registrar">
-        </article>
-    </form>
+    <fieldset class="container border border-2 border-success rounded w-50">
+        <legend>Añadir producto</legend>
+        <form asp-controller="Presupuesto" asp-action="AgregarDetalle" class="p-2">
+            <article class="form-group">
+                <label asp-for="@Model.IdPresupuesto" class="form-label">Presupuesto N°: </label>
+                <input asp-for="@Model.IdPresupuesto" class="form-control" readonly>
+                <!-- En teoria, readonly permite recibir del model pero no alterar por usuario -->
+            </article>
+            <article class="my-2 form-group">
+                <label asp-for="@Model.IdProducto" class="form-label">Producto N°: </label>
+                <input asp-for="@Model.IdProducto" class="form-control">
+            </article>
+            <article class="my-2 form-group">
+                <label asp-for="@Model.Cantidad" class="form-label">Cantidad: </label>
+                <input asp-for="@Model.Cantidad" class="form-control">
+            </article>
+            <article class="p-3 d-flex justify-content-center">
+                <input type="submit" value="Registrar" class="btn btn-primary">
+            </article>
+        </form>
+    </fieldset>
 </div>

@@ -7,6 +7,7 @@
 
 
 <!-- Ctr + c termina la ejecucion del proyecto -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 <div class="text-center container-fluid">
     <h1 class="display-6">Productos Disponibles</h1>
     <table class="table table-striped table-secondary">
@@ -22,25 +23,25 @@
         <tbody>
             @foreach (Producto prod in Model)
             {
-                <tr>
-                    <td>@prod.Id</td>
-                    <td>@prod.Descripcion</td>
-                    <td>$ @prod.Precio</td>
-                    <td>
-                    <!-- cuidado con los labels de asp, en el 'asp-route-X' -->
-                    <!-- X es el nombre de la variable como la estas usando -->
-                    <!-- osea, con el nombre como llega al View -->
-                        <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
-                            Act
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
-                        onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
-                            Borrar
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>@prod.Id</td>
+                <td>@prod.Descripcion</td>
+                <td>$ @prod.Precio</td>
+                <td>
+                <!-- cuidado con los labels de asp, en el 'asp-route-X' -->
+                <!-- X es el nombre de la variable como la estas usando -->
+                <!-- osea, con el nombre como llega al View -->
+                    <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
+                    onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

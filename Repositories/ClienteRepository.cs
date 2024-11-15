@@ -61,7 +61,7 @@ public class ClienteRepository
 // ----
 	public void ActualizarCliente(Cliente cliente)
     {
-        string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dirt, telefono = @tel WHERE idCliente = @id";
+        string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dir, telefono = @tel WHERE idCliente = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {

@@ -8,11 +8,13 @@ public class PresupuestoRepository
 {
     string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
 
+// todos estos metodos tienen que cambiar, ya no traes un string si no un objeto
+
+// ----
     public List<Presupuesto> ConsultarPresupuestos()
     {
         List<Presupuesto> lista = new List<Presupuesto>();
 
-// ----
     // una nota sobre esto al final * -------------------------
         string consulta =   "SELECT idPresupuesto, NombreDestinatario, FechaCreacion, idProducto, cantidad, descripcion, precio " +
                             "FROM Presupuesto " +
@@ -33,7 +35,7 @@ public class PresupuestoRepository
                     {
                         Presupuesto presupuestoLeido = new Presupuesto();
                         presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
-                        presupuestoLeido.NombreDestinatario = lector["NombreDestinatario"].ToString();
+                        presupuestoLeido.Cliente = lector[]
                         presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
 
                         presupuestoLeido.Cantidades = new List<int>();         // no estan inicializadas en el model

@@ -21,10 +21,10 @@ public class ProductoController : Controller
     }
 
 
-// todas la views van a ser archivos dentro de Views,
-// aquí pones una metodo que llame al nombre del archivo
-// y retorne el metodo View()
-// dentro de estos metodos usas los controllers de cada cosa
+    // todas la views van a ser archivos dentro de Views,
+    // aquí pones una metodo que llame al nombre del archivo
+    // y retorne el metodo View()
+    // dentro de estos metodos usas los controllers de cada cosa
     [HttpGet("ListarProducto")]
     public IActionResult Index()
     {
@@ -33,16 +33,16 @@ public class ProductoController : Controller
     }
 
 
-// ----- Pudiste preguntar como solucionar el error 405
-// ----- resulta que necesitas usar un GET antes del POST
-// ----- de esa forma evitas que te diga que los metodos no coinciden
+    // ----- Pudiste preguntar como solucionar el error 405
+    // ----- resulta que necesitas usar un GET antes del POST
+    // ----- de esa forma evitas que te diga que los metodos no coinciden
 
     // ----- Acá lo que tenes es un metodo GET que crea un producto vacio
     // ----- toma los datos del formulario para ponerlos en el objeto nuevo
     [HttpGet("RegistrarProducto")]
     public IActionResult RegistrarProducto()
     {
-    // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
+        // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
         return View(new Producto());
     }
 
@@ -56,10 +56,10 @@ public class ProductoController : Controller
         repoProducto.CargarNuevoProducto(producto);
         return RedirectToAction("Index");
     }
-// ------
+    // ------
 
 
-// ----
+    // ----
     [HttpGet("ActualizarProducto")]
     public IActionResult ActualizarProducto(int id)
     {
@@ -73,19 +73,19 @@ public class ProductoController : Controller
         repoProducto.ActualizarProducto(producto);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
 
-// algo que te apareció en el quiz, no hace falta explicitar el View
-// por nombre si el View tiene el mismo nombre del metodo
-// ----
+    // algo que te apareció en el quiz, no hace falta explicitar el View
+    // por nombre si el View tiene el mismo nombre del metodo
+    // ----
     [HttpGet("BorrarProducto")]
     public IActionResult BorrarProducto(int id)
     {
         repoProducto.BorrarProducto(id);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

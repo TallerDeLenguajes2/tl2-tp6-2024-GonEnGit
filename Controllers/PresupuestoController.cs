@@ -18,20 +18,20 @@ public class PresupuestoController : Controller
         repoPresupuesto = new PresupuestoRepository();
     }
 
-// todas la views van a ser archivos dentro de Views,
-// aquí pones una metodo que llame al nombre del archivo
-// y retorne el metodo View()
-// dentro de estos metodos usas los controllers de cada cosa
-// ----
+    // todas la views van a ser archivos dentro de Views,
+    // aquí pones una metodo que llame al nombre del archivo
+    // y retorne el metodo View()
+    // dentro de estos metodos usas los controllers de cada cosa
+    // ----
     [HttpGet("ConsultarPresupuesto")]
     public IActionResult Index()
     {
         List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
         return View(lista);
     }
-// ----
+    // ----
 
-// ----
+    // ----
     [HttpGet("CrearPresupuesto")]
     public IActionResult CrearPresupuesto()
     {
@@ -44,10 +44,10 @@ public class PresupuestoController : Controller
         repoPresupuesto.CrearPresupuesto(presupuesto);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
 
-// ----
+    // ----
     [HttpGet("ActualizarPresupuesto")]
     public IActionResult ActualizarPresupuesto(int id)
     {
@@ -61,9 +61,9 @@ public class PresupuestoController : Controller
         repoPresupuesto.ActualizarPresupuesto(presupuesto);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
-// ----
+    // ----
     [HttpGet("BorrarPresupuesto")]
     public IActionResult BorrarPresupuesto(int id)
     {
@@ -71,10 +71,10 @@ public class PresupuestoController : Controller
         repoPresupuesto.BorrarPresupuesto(id);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
 
-// ----
+    // ----
     [HttpGet("AgregarDetalle")]
     public IActionResult AgregarDetalle(int id)
     {
@@ -93,20 +93,20 @@ public class PresupuestoController : Controller
         repoPresupuesto.AgregarDetalle(detalle);
         return RedirectToAction("Index");
     }
-// ----
+    // ----
 
 
-// ----
+    // ----
     // no creo que se pueda borra los detalles de a 1 todavia...
     // como identificas un detalle en particular? necesitas si o si
     // los 3 valores, no tiene un idDetalle...
-// ----
+    // ----
 
 
-// se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una lista de productos
-// traes todo con inner join y de ahí podes mostrar cada presupuesto con sus productos
+    // se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una lista de productos
+    // traes todo con inner join y de ahí podes mostrar cada presupuesto con sus productos
 
-// esto no lo tocas todavia
+    // esto no lo tocas todavia
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

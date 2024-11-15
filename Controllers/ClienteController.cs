@@ -17,30 +17,30 @@ public class ClienteController : Controller
 	public ClienteController(ILogger<ClienteController> logger)
 	{
 		_logger = logger;
-		repoCliente = new ClienteRepository(); // Falta -----------------------------------------
+		repoCliente = new ClienteRepository();
 	}
 
 // ----
 	[HttpGet("ListarClientes")]
 	public IActionResult Index()
 	{
-		List<Producto> lista = repoCliente.ListarClientes(); // Falta -----------------------------------------
+		List<Cliente> lista = repoCliente.ListarClientes();
 		return View(lista);
 	}
 // ----
 
 
 // ----
-	[HttpGet("RegistrarCliente")]
-	public IActionResult RegistrarCliente()
+	[HttpGet("CargarCliente")]
+	public IActionResult CargarCliente()
 	{
 		return View(new Cliente());
 	}
 
-	[HttpPost("RegistrarCliente")]
-	public IActionResult RegistrarCliente(Cliente cliente)
+	[HttpPost("CargarCliente")]
+	public IActionResult CargarCliente(Cliente cliente)
 	{
-		repoCliente.CargarNuevoCliente(cliente); // Falta -----------------------------------------
+		repoCliente.CargarCliente(cliente);
 		return RedirectToAction("Index");
 	}
 // ----
@@ -50,14 +50,14 @@ public class ClienteController : Controller
 	[HttpGet("ActualizarCliente")]
 	public IActionResult ActualizarCliente(int id)
 	{
-		List<Cliente> lista = repoCliente.ListarCliente(); // Falta -----------------------------------------
+		List<Cliente> lista = repoCliente.ListarClientes();
 		return View(lista.FirstOrDefault(cliente => cliente.IdCliente == id));
 	}
 
 	[HttpPost("ActualizarCliente")]
 	public IActionResult ActualizarCliente(Cliente cliente)
 	{
-		repoCliente.ActualizarCliente(cliente); // Falta -----------------------------------------
+		repoCliente.ActualizarCliente(cliente);
 		return RedirectToAction("Index");
 	}
 // ----

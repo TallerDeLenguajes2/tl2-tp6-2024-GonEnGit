@@ -3,6 +3,7 @@ namespace EspacioRepositorios;
 using System.Runtime.InteropServices;
 using EspacioModelos;
 using Microsoft.Data.Sqlite;
+using SQLitePCL;
 
 public class ClienteRepository
 {
@@ -34,5 +35,54 @@ public class ClienteRepository
 
 			return lista;
 		}
+	}
+
+// ----
+	public void CargarCliente(Cliente cliente)
+	{
+		string consulta = "INSERT INTO Cliente(nombre, direccion, telefono) VALUES (@nom, @dir, @tel)";
+
+		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		{
+			SqliteCommand comando = new SqliteCommand(consulta, conexion);
+			conexion.Open();
+
+			comando.Parameters.Add(new SqliteParameter("@nom", cliente.Nombre));
+			comando.Parameters.Add(new SqliteParameter("@dir", cliente.Direccion));
+			comando.Parameters.Add(new SqliteParameter("@tel", cliente.Telefono));
+
+			comando.ExecuteNonQuery();
+			conexion.Close();
+		}
+	}
+// ----
+
+
+// ----
+	public void ActualizarCliente(Cliente cliente)
+    {
+        string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dirt, telefono = @tel WHERE idCliente = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@nom", cliente.Nombre));
+            comando.Parameters.Add(new SqliteParameter("@dir", cliente.Direccion));
+			comando.Parameters.Add(new SqliteParameter("@tel", cliente.Telefono));
+            comando.Parameters.Add(new SqliteParameter("@id", cliente.IdCliente));
+
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+// ----
+
+
+// ----
+	public void BorrarCliente(int id)
+	{
+		
 	}
 }

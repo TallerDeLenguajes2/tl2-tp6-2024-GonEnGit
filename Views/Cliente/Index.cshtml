@@ -1,0 +1,48 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model List<Cliente>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+<div class="text-center container-fluid">
+    <h1 class="display-6">Clientes</h1>
+    <table class="table table-striped table-secondary">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Direccion</td>
+                <td>Teléfono</td>
+                <td>Actualizar</td>
+                <td>Borrar</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Cliente cliente in Model)
+            {
+            <tr>
+                <td>@cliente.IdCliente</td>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.Telefono</td>
+                <td>
+                    <a asp-controller="Cliente" asp-action="ActualizarCliente" asp-route-id="@cliente.IdCliente">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@cliente.IdCliente"
+                    onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <article class="d-flex justify-content-around">
+        <a class="btn btn-outline-info bg-dark" asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente Nuevo</a>
+    </article>
+</div>

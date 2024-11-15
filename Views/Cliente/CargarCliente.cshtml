@@ -1,0 +1,27 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModelos
+
+@model Cliente
+
+<fieldset class="container border border-2 border-success rounded w-50">
+    <form asp-controller="Cliente" asp-action="CargarCliente" class="p-2">
+        <legend>Nuevo Cliente</legend>
+        <article class="form-group">
+            <label asp-for="@Model.Nombre" class="form-label">Nombre: </label>
+            <input asp-for="@Model.Nombre" class="form-control">
+        </article>
+        <article class="my-2 form-group">
+            <label asp-for="@Model.Direccion" class="form-label">Dirección: </label>
+            <input asp-for="@Model.Direccion" class="form-control">
+        </article>
+        <article class="my-2 form-group">
+            <label asp-for="@Model.Telefono" class="form-label">Teléfono: </label>
+            <input asp-for="@Model.Telefono" class="form-control">
+        </article>
+        <article class="p-3 d-flex justify-content-center">
+            <input type="submit" value="Registrar" class="btn btn-primary">
+        </article>
+    </form>
+</fieldset>

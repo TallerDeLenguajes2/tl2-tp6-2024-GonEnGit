@@ -12,7 +12,7 @@ public class ProductoRepository
     public void CargarNuevoProducto(Producto producto) // esto te esta dando un error 405
     {
     // no te comas las @, estan para mapear los atributos mas abajo
-        string consulta = @"INSERT INTO Productos(Descripcion, Precio) VALUES (@desc, @precio)";
+        string consulta = @"INSERT INTO Producto(Descripcion, Precio) VALUES (@desc, @precio)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -27,7 +27,7 @@ public class ProductoRepository
 
     public void ActualizarProducto(Producto producto)
     {
-        string consulta = @"UPDATE Productos SET Descripcion = @descripcion, Precio = @precio WHERE idProducto = @id";
+        string consulta = @"UPDATE Producto SET Descripcion = @descripcion, Precio = @precio WHERE idProducto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -46,7 +46,7 @@ public class ProductoRepository
     public List<Producto> ListarProducto()
     {
         List<Producto> lista = new List<Producto>();
-        string consulta = @"SELECT * FROM Productos";
+        string consulta = @"SELECT * FROM Producto";
 
         using(SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -72,7 +72,7 @@ public class ProductoRepository
 
     public void BorrarProducto(int id)
     {
-        string consulta = @"DELETE FROM Productos WHERE idProducto = @id";
+        string consulta = @"DELETE FROM Producto WHERE idProducto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {

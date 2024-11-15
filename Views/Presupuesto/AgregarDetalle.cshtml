@@ -7,41 +7,27 @@
 
 <div class="text-center container-fluid">
     <h1 class="display-6">Productos Disponibles</h1>
-    <table class="table table-striped table-secondary">
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Descripcion</td>
-                <td>Precio</td>
-                <td>Actualizar</td>
-                <td>Borrar</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Producto prod in Model.Productos)
-            {
+    <fieldset class="d-flex justify-content-center">
+        <table class="table table-striped table-secondary">
+            <thead>
                 <tr>
-                    <td>@prod.Id</td>
-                    <td>@prod.Descripcion</td>
-                    <td>$ @prod.Precio</td>
-                    <td>
-                    <!-- cuidado con los labels de asp, en el 'asp-route-X' -->
-                    <!-- X es el nombre de la variable como la estas usando -->
-                    <!-- osea, con el nombre como llega al View -->
-                        <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
-                            Act
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
-                        onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
-                            Borrar
-                        </a>
-                    </td>
+                    <td>Id</td>
+                    <td>Descripcion</td>
+                    <td>Precio</td>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (Producto prod in Model.Productos)
+                {
+                    <tr>
+                        <td>@prod.Id</td>
+                        <td>@prod.Descripcion</td>
+                        <td>$ @prod.Precio</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
     <fieldset class="container border border-2 border-success rounded w-50">
         <legend>Añadir producto</legend>
         <form asp-controller="Presupuesto" asp-action="AgregarDetalle" class="p-2">

@@ -15,9 +15,9 @@ public class PresupuestoRepository
 // ----
     // una nota sobre esto al final * -------------------------
         string consulta =   "SELECT idPresupuesto, NombreDestinatario, FechaCreacion, idProducto, cantidad, descripcion, precio " +
-                            "FROM Presupuestos " +
-                            "LEFT JOIN PresupuestosDetalle USING (idPresupuesto) " +
-                            "LEFT JOIN Productos USING (idProducto)";
+                            "FROM Presupuesto " +
+                            "LEFT JOIN PresupuestoDetalle USING (idPresupuesto) " +
+                            "LEFT JOIN Producto USING (idProducto)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -67,7 +67,7 @@ public class PresupuestoRepository
 // ----
     public void CrearPresupuesto(Presupuesto presupuesto)
     {
-        string consulta = @"INSERT INTO Presupuestos(NombreDestinatario, FechaCreacion) VALUES (@destinatario, @fecha)";
+        string consulta = @"INSERT INTO Presupuesto(NombreDestinatario, FechaCreacion) VALUES (@destinatario, @fecha)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -86,7 +86,7 @@ public class PresupuestoRepository
 // ----
     public void ActualizarPresupuesto(Presupuesto presupuesto)
     {
-        string consulta = "UPDATE Presupuestos SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
+        string consulta = "UPDATE Presupuesto SET NombreDestinatario = @nombre, FechaCreacion = @fecha WHERE idPresupuesto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -106,7 +106,7 @@ public class PresupuestoRepository
 // ----
     public void BorrarPresupuesto(int id)
     {
-        string consulta = @"DELETE FROM Presupuestos WHERE idPresupuesto = @id";
+        string consulta = @"DELETE FROM Presupuesto WHERE idPresupuesto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -123,7 +123,7 @@ public class PresupuestoRepository
 // ----
     public void AgregarDetalle(PresupuestoDetalle detalle)
     {
-        string consulta = @"INSERT INTO PresupuestosDetalle(idPresupuesto, idProducto, cantidad) VALUES (@idPres, @idProd, @cant)";
+        string consulta = @"INSERT INTO PresupuestoDetalle(idPresupuesto, idProducto, cantidad) VALUES (@idPres, @idProd, @cant)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -143,7 +143,7 @@ public class PresupuestoRepository
 // ----
     public void BorrarDetalles(int id)
     {
-        string consulta = @"DELETE FROM PresupuestosDetalle WHERE idPresupuesto = @id";
+        string consulta = @"DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @id";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -164,7 +164,7 @@ public class PresupuestoRepository
 / --- * --- /
 C# es mas estricto con SQL, cuando usas USING, el atributo tiene que estar entre parentesis
 igual que lo estas haciendo en bases, cuando usas ON parece que los parentesis no hacen falta
-pero igualmente tendrias que usar 'ON Presupuestos.idPresupuesto = ...'
+pero igualmente tendrias que usar 'ON Presupuesto.idPresupuesto = ...'
 
 / --- ** --- /
 Parece que te da un problema para tratar de signar un valor nulo

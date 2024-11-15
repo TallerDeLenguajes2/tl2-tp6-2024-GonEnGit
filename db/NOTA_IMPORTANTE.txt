@@ -1,0 +1,8 @@
+
+-- el punte 3 a pide un view model que tenga un presupuesto y un cliente
+   con eso hacer como un menu desplegable que muestre la informacion del cliente
+
+-- el b pide basicamente lo que hiciste con agragar producto para el tp 6
+   lo que implica que el TP 6 estaria mal hecho....
+
+-- el 3 c y el 4 con obvios y son casi lo mismo

@@ -20,7 +20,7 @@ public class ProductoController : Controller
         repoProducto = new ProductoRepository();
     }
 
-
+// ----
     // todas la views van a ser archivos dentro de Views,
     // aquí pones una metodo que llame al nombre del archivo
     // y retorne el metodo View()
@@ -31,8 +31,9 @@ public class ProductoController : Controller
         List<Producto> lista = repoProducto.ListarProducto();
         return View(lista);
     }
+// ----
 
-
+// ----
     // ----- Pudiste preguntar como solucionar el error 405
     // ----- resulta que necesitas usar un GET antes del POST
     // ----- de esa forma evitas que te diga que los metodos no coinciden
@@ -45,7 +46,9 @@ public class ProductoController : Controller
         // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
         return View(new Producto());
     }
+// ----
 
+// ----
     // ----- NOTA: fijate que los 2 controllers tienen el mismo nombre
 
     // ----- y un POST que resive el objeto cargado y lo envia
@@ -56,10 +59,10 @@ public class ProductoController : Controller
         repoProducto.CargarNuevoProducto(producto);
         return RedirectToAction("Index");
     }
-    // ------
+// ----
 
 
-    // ----
+// ----
     [HttpGet("ActualizarProducto")]
     public IActionResult ActualizarProducto(int id)
     {
@@ -73,19 +76,18 @@ public class ProductoController : Controller
         repoProducto.ActualizarProducto(producto);
         return RedirectToAction("Index");
     }
-    // ----
+// ----
 
-
+// ----
     // algo que te apareció en el quiz, no hace falta explicitar el View
     // por nombre si el View tiene el mismo nombre del metodo
-    // ----
     [HttpGet("BorrarProducto")]
     public IActionResult BorrarProducto(int id)
     {
         repoProducto.BorrarProducto(id);
         return RedirectToAction("Index");
     }
-    // ----
+// ----
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

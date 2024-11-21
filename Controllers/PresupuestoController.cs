@@ -18,10 +18,6 @@ public class PresupuestoController : Controller
         repoPresupuesto = new PresupuestoRepository();
     }
 
-    // todas la views van a ser archivos dentro de Views,
-    // aquí pones una metodo que llame al nombre del archivo
-    // y retorne el metodo View()
-    // dentro de estos metodos usas los controllers de cada cosa
     // ----
     [HttpGet("ConsultarPresupuesto")]
     public IActionResult Index()
@@ -104,7 +100,7 @@ public class PresupuestoController : Controller
 
 
     // se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una lista de productos
-    // traes todo con inner join y de ahí podes mostrar cada presupuesto con sus productos
+    // traes todo con INNER JOIN y de ahí podes mostrar cada presupuesto con sus productos
 
     // esto no lo tocas todavia
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

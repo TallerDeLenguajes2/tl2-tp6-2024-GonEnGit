@@ -56,35 +56,35 @@ public class ClienteRepository
 	}
 
 	public void ActualizarCliente(Cliente cliente)
-    {
-        string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dir, telefono = @tel WHERE idCliente = @id";
+	{
+		string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dir, telefono = @tel WHERE idCliente = @id";
 
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
+		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		{
+			SqliteCommand comando = new SqliteCommand(consulta, conexion);
+			conexion.Open();
 
-            comando.Parameters.Add(new SqliteParameter("@nom", cliente.Nombre));
-            comando.Parameters.Add(new SqliteParameter("@dir", cliente.Direccion));
+			comando.Parameters.Add(new SqliteParameter("@nom", cliente.Nombre));
+			comando.Parameters.Add(new SqliteParameter("@dir", cliente.Direccion));
 			comando.Parameters.Add(new SqliteParameter("@tel", cliente.Telefono));
-            comando.Parameters.Add(new SqliteParameter("@id", cliente.IdCliente));
+			comando.Parameters.Add(new SqliteParameter("@id", cliente.IdCliente));
 
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
+			comando.ExecuteNonQuery();
+			conexion.Close();
+		}
+	}
 
-   public void BorrarCliente(int id)
-    {
-        string consulta = @"DELETE FROM Cliente WHERE idCliente = @id";
+	public void BorrarCliente(int id)
+	{
+		string consulta = @"DELETE FROM Cliente WHERE idCliente = @id";
 
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-            comando.Parameters.Add(new SqliteParameter("@id", id));
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
+		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		{
+			SqliteCommand comando = new SqliteCommand(consulta, conexion);
+			conexion.Open();
+			comando.Parameters.Add(new SqliteParameter("@id", id));
+			comando.ExecuteNonQuery();
+			conexion.Close();
+		}
+	}
 }

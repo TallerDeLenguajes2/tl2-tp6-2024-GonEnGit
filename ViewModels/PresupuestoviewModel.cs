@@ -5,12 +5,12 @@ namespace EspacioViewModels;
 
 public class PresupuestoViewModel
 {
-    public Presupuesto presupuesto;
-    public Cliente clientes;
+    public List<Presupuesto> Presupuestos;
+    public List<Cliente> Clientes;
 
-    public PresupuestoViewModel(Presupuesto pres, Cliente cli)
+    public PresupuestoViewModel(List<Presupuesto> ListaPres, List<Cliente> ListaCli)
     {
-        presupuesto = pres;
-        clientes = cli;
+        Presupuestos = ListaPres;
+        Clientes = ListaCli;
     }
 }

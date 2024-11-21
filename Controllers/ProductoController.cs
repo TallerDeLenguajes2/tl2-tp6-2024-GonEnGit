@@ -51,7 +51,7 @@ public class ProductoController : Controller
 // ----
     // ----- NOTA: fijate que los 2 controllers tienen el mismo nombre
 
-    // ----- y un POST que resive el objeto cargado y lo envia
+    // ----- y un POST que resibe el objeto cargado y lo envia
     // ----- a la db usando el metodo RegistrarProducto
     [HttpPost("RegistrarProducto")]
     public IActionResult RegistrarProducto(Producto producto)

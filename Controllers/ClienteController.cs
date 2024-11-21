@@ -67,7 +67,7 @@ public class ClienteController : Controller
 	[HttpGet("BorrarCliente")]
 	public IActionResult BorrarCliente(int id)
 	{
-		repoCliente.BorrarCliente(id); // Falta -----------------------------------------
+		repoCliente.BorrarCliente(id);
 		return RedirectToAction("Index");
 	}
 // ----

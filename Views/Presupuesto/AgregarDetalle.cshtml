@@ -1,9 +1,10 @@
 
 @using tl2_tp6_2024_GonEnGit.Models
 
-@using EspacioModelos
+@using EspacioModels
+@using EspacioViewModels
 
-@model PresupuestoDetalle
+@model AltaProductosViewModel
 
 <!-- Esto así esta bien solo que tenes que cambiar el model y probablemente los metodos... -->
 
@@ -19,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Producto prod in Model.Productos)
+                @foreach (Producto prod in Model.productosDisponibles)
                 {
                     <tr>
                         <td>@prod.Id</td>
@@ -34,17 +35,17 @@
         <legend>Añadir producto</legend>
         <form asp-controller="Presupuesto" asp-action="AgregarDetalle" class="p-2">
             <article class="form-group">
-                <label asp-for="@Model.IdPresupuesto" class="form-label">Presupuesto N°: </label>
-                <input asp-for="@Model.IdPresupuesto" class="form-control" readonly>
+                <label asp-for="@Model.presupuesto.IdPresupuesto" class="form-label">Presupuesto N°: </label>
+                <input asp-for="@Model.presupuesto.IdPresupuesto" class="form-control" readonly>
                 <!-- En teoria, readonly permite recibir del model pero no alterar por usuario -->
             </article>
             <article class="my-2 form-group">
-                <label asp-for="@Model.IdProducto" class="form-label">Producto N°: </label>
-                <input asp-for="@Model.IdProducto" class="form-control">
+                <label asp-for="@Model.producto.Id" class="form-label">Producto N°: </label>
+                <input asp-for="@Model.producto.Id" class="form-control">
             </article>
             <article class="my-2 form-group">
-                <label asp-for="@Model.Cantidad" class="form-label">Cantidad: </label>
-                <input asp-for="@Model.Cantidad" class="form-control">
+                <label asp-for="@Model.cantidad" class="form-label">Cantidad: </label>
+                <input asp-for="@Model.cantidad" class="form-control">
             </article>
             <article class="p-3 d-flex justify-content-center">
                 <input type="submit" value="Registrar" class="btn btn-primary">

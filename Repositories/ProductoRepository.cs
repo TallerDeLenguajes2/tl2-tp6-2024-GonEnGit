@@ -1,6 +1,6 @@
 namespace EspacioRepositorios;
 
-using EspacioModelos;
+using EspacioModels;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
@@ -60,7 +60,7 @@ public class ProductoRepository
                     Producto productoLeido = new Producto();
                     productoLeido.Id = Convert.ToInt32(lector["idProducto"]);
                     productoLeido.Descripcion = lector["Descripcion"].ToString();
-                    productoLeido.Precio = Convert.ToDouble(lector["Precio"]);
+                    productoLeido.Precio = Convert.ToDecimal(lector["Precio"]);
                     lista.Add(productoLeido);
                 }
             }

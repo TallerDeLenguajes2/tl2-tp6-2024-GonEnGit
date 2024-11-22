@@ -1,5 +1,5 @@
 
-namespace EspacioModelos;
+namespace EspacioModels;
 
 public class PresupuestoDetalle
 {

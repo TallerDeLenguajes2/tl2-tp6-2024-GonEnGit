@@ -1,7 +1,7 @@
 
 @using tl2_tp6_2024_GonEnGit.Models
 
-@using EspacioModelos
+@using EspacioModels
 
 @model Presupuesto
 
@@ -14,10 +14,10 @@
         <!-- No estoy seguro de si era así, pero estó soluciona el envio del id para la actualizacion -->
         <input type="hidden" asp-for="@Model.IdPresupuesto">
         <article class="form-group">
-            <label asp-for="@Model.Cliente.Nombre" class="form-label">
+            <label asp-for="@Model.IdCliente" class="form-label">
                 Nombre:
             </label>
-            <input asp-for="@Model.Cliente.Nombre" class="form-control">
+            <input asp-for="@Model.IdCliente" class="form-control">
         </article>
         <article class="my-2 form-group">
             <label asp-for="@Model.FechaCreacion" class="form-label">

@@ -1,8 +1,12 @@
+
+/* este archivo quedaria obsoleto en teoria */
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp6_2024_GonEnGit.Models;
 
-using EspacioModelos;
+using EspacioModels;
+using EspacioViewModels;
 using EspacioRepositorios;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
@@ -22,17 +26,18 @@ public class PresupuestoController : Controller
     [HttpGet("ConsultarPresupuesto")]
     public IActionResult Index()
     {
-        List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
-        return View(lista);
+        PresupuestoViewModel modelo = repoPresupuesto.ConsultarPresupuestos();
+        return View(modelo);
     }
     // ----
 
     // ----
+    /*
     [HttpGet("CrearPresupuesto")]
     public IActionResult CrearPresupuesto()
     {
         return View(new Presupuesto());
-    }
+    }*/
 
     [HttpPost("CrearPresupuesto")]
     public IActionResult CrearPresupuesto(Presupuesto presupuesto)
@@ -42,7 +47,7 @@ public class PresupuestoController : Controller
     }
     // ----
 
-
+/*
     // ----
     [HttpGet("ActualizarPresupuesto")]
     public IActionResult ActualizarPresupuesto(int id)
@@ -58,6 +63,7 @@ public class PresupuestoController : Controller
         return RedirectToAction("Index");
     }
     // ----
+*/
 
     // ----
     [HttpGet("BorrarPresupuesto")]

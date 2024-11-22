@@ -113,3 +113,45 @@
         <a class="btn btn-outline-info bg-dark" asp-controller="Presupuesto" asp-action="CrearPresupuesto">Agregar Presupuesto</a>
     </article>
 </div>
+
+
+<!-- ---------------- tabla Presupuestos antes del ViewModel ---------------- -->
+
+<tr>
+    <td>
+        <a asp-controller="Presupuesto" asp-action="ActualizarPresupuesto" asp-route-id="@presu.IdPresupuesto">
+            <i class="bi bi-pencil-square"></i>
+        </a>
+    </td>
+    <td>
+        <a asp-controller="Presupuesto" asp-action="BorrarPresupuesto" asp-route-id="@presu.IdPresupuesto"
+        onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+            <i class="bi bi-trash"></i>
+        </a>
+    </td>
+    <td>
+        <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@presu.IdPresupuesto">
+            <i class="bi bi-bag-plus"></i>
+        </a>
+    </td>
+    <td>@presu.IdPresupuesto</td>
+    <td>@presu.IdCliente</td>
+    <td>@presu.FechaCreacion</td>
+    @if (0 != 0)
+    {
+    <td class="p-0 px-1">
+        <table class="m-0 table table-striped table-success table-hover">
+            <tbody>
+                @for (int i = 0; i < 10; i++)
+                {
+                <tr>    <!-- El producto y la cantidad coinciden en indice -->
+                    <td><!-- -arroba- presu.Productos[i].Descripcion--></td>
+                    <td><!-- $ -arroba- presu.Productos[i].Precio --></td>
+                    <td><!-- -arroba- presu.Cantidades[i]--></td>
+                </tr>
+                }   
+            </tbody>
+        </table>
+    </td>
+    }
+</tr>

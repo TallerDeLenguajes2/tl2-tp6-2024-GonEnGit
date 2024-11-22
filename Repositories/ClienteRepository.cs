@@ -1,7 +1,7 @@
 namespace EspacioRepositorios;
 
 using System.Runtime.InteropServices;
-using EspacioModelos;
+using EspacioModels;
 using Microsoft.Data.Sqlite;
 using SQLitePCL;
 

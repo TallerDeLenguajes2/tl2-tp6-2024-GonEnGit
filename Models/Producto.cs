@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace EspacioModelos;
+namespace EspacioModels;
 
 public class Producto
 {

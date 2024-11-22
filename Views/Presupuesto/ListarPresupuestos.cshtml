@@ -1,0 +1,35 @@
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModels
+@using EspacioViewModels
+
+@model ListaPresupuestosViewModel
+
+<h1 class="px-3 display-6">Presupuestos</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+@foreach (Presupuesto presu in Model.presupuestos)
+{
+<div class="container-fluid text-center">
+    <table class="table table-striped table-bordered table-secondary align-middle">
+        <thead class="font-weight-bold">
+            <tr>
+                <td class="col-sm-1">Id</td>
+                <td class="col-sm-1">Nombre</td>
+                <td class="col-sm-1">Fecha</td>
+                <td colspan = "3">Productos</td>
+            </tr>
+        </thead>
+        <tbody>
+            <td>@presu.IdPresupuesto</td>
+            <td>@Model.clientes.FirstOrDefault(cli => cli.IdCliente == presu.IdCliente).Nombre</td>
+            <td>@presu.FechaCreacion</td>
+            @foreach (Producto prod in Model.productos)
+            {
+                <td>
+                    @prod.Id - @prod.Descripcion - $@prod.Precio
+                </td>
+            }
+        </tbody>
+    </table>
+</div>
+}

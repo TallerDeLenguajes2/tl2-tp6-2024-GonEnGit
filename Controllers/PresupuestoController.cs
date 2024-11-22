@@ -32,13 +32,15 @@ public class PresupuestoController : Controller
     // ----
 
     // ----
-    /*
-    [HttpGet("CrearPresupuesto")]
-    public IActionResult CrearPresupuesto()
+    [HttpGet("ListarPresupuestos")]
+    public IActionResult ListarPresupuestos()
     {
-        return View(new Presupuesto());
-    }*/
+        ListaPresupuestosViewModel modelo = repoPresupuesto.ListarPresupuestos();
+        return View(modelo);
+    }
+    // ----
 
+    // ----
     [HttpPost("CrearPresupuesto")]
     public IActionResult CrearPresupuesto(Presupuesto presupuesto)
     {
@@ -46,24 +48,6 @@ public class PresupuestoController : Controller
         return RedirectToAction("Index");
     }
     // ----
-
-/*
-    // ----
-    [HttpGet("ActualizarPresupuesto")]
-    public IActionResult ActualizarPresupuesto(int id)
-    {
-        List<Presupuesto> lista = repoPresupuesto.ConsultarPresupuestos();
-        return View(lista.FirstOrDefault(presupuesto => presupuesto.IdPresupuesto == id));
-    }
-
-    [HttpPost("ActualizarPresupuesto")]
-    public IActionResult ActualizarPresupuesto(Presupuesto presupuesto)
-    {
-        repoPresupuesto.ActualizarPresupuesto(presupuesto);
-        return RedirectToAction("Index");
-    }
-    // ----
-*/
 
     // ----
     [HttpGet("BorrarPresupuesto")]

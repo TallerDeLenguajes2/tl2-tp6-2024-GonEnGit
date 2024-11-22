@@ -155,3 +155,27 @@
     </td>
     }
 </tr>
+
+<!------------------------------- una nota importatne -------------------------------->
+
+<!-- el nombre de la propiedad del ViewModel tambien tiene que coincidir
+<!-- con el nombre de lo que sea que recibe el controller
+<!-- tu controller recibe Presupuesto presupuesto, el View model tiene que tener un Presupuesto presupuest
+<article class="d-flex justify-content-around">
+    <fieldset class="container border border-2 border-success rounded w-50">
+        <form asp-controller="Presupuesto" asp-action="CrearPresupuesto" class="p-2">
+            <legend>Nuevo Presupuesto</legend>
+            <article class="form-group">
+                <label asp-for="@Model.presupuesto.IdCliente" class="form-label">Cliente N°</label>
+                <input asp-for="@Model.presupuesto.IdCliente" class="form-control">
+            </article>
+            <article class="my-2 form-group">
+                <label asp-for="@Model.presupuesto.FechaCreacion" class="form-label">Fecha: </label>
+                <input asp-for="@Model.presupuesto.FechaCreacion" class="form-control">
+            </article>
+            <article class="p-3 d-flex justify-content-center">
+                <input type="submit" value="Registrar" class="btn btn-primary">
+            </article>
+        </form>
+    </fieldset>
+</article>

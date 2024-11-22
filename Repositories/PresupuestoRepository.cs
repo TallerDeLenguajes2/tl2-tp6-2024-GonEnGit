@@ -69,6 +69,94 @@ public class PresupuestoRepository
     }
 // ----
 
+// ----
+    public ListaPresupuestosViewModel ListarPresupuestos()
+    {
+        List<Cliente> listaCli = new List<Cliente>();
+        List<Presupuesto> listaPres = new List<Presupuesto>();
+        List<PresupuestoDetalle> listaDet = new List<PresupuestoDetalle>();
+        List<Producto> listaProd = new List<Producto>();
+
+        string consultaClientes = "SELECT * FROM Cliente";
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            SqliteCommand comandoCli = new SqliteCommand(consultaClientes, conexion);
+            conexion.Open();
+
+            using (SqliteDataReader lector = comandoCli.ExecuteReader())
+            {
+                while (lector.Read())
+                {
+                    Cliente clienteLeido = new Cliente();
+                    clienteLeido.IdCliente = Convert.ToInt32(lector["idCliente"]);
+                    clienteLeido.Nombre = lector["nombre"].ToString();
+                    clienteLeido.Direccion = lector["direccion"].ToString();
+                    clienteLeido.Telefono = lector["telefono"].ToString();
+
+                    listaCli.Add(clienteLeido);
+                }
+            }
+            conexion.Close();
+    // ----
+            string consultaPresupuestos = "SELECT * FROM Presupuesto";
+            SqliteCommand comandoPres = new SqliteCommand(consultaPresupuestos,conexion);
+            conexion.Open();
+
+            using (SqliteDataReader lector = comandoPres.ExecuteReader())
+            {
+                while (lector.Read())
+                {
+                    Presupuesto presupuestoLeido = new Presupuesto();
+                    presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
+                    presupuestoLeido.IdCliente = Convert.ToInt32(lector["IdCliente"]);
+                    presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
+
+                    listaPres.Add(presupuestoLeido);
+                }
+            }
+            conexion.Close();
+    // ----
+            string consultaDetalles = "SELECT * FROM PresupuestoDetalle";
+            SqliteCommand comandoDets = new SqliteCommand(consultaDetalles,conexion);
+            conexion.Open();
+
+            using (SqliteDataReader lector = comandoPres.ExecuteReader())
+            {
+                while (lector.Read())
+                {
+                    Presupuesto presupuestoLeido = new Presupuesto();
+                    presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
+                    presupuestoLeido.IdCliente = Convert.ToInt32(lector["IdCliente"]);
+                    presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
+
+                    listaPres.Add(presupuestoLeido);
+                }
+            }
+            conexion.Close();
+    // ----
+            string consultaProductos = "SELECT * FROM Producto";
+            SqliteCommand comandoProd = new SqliteCommand(consultaProductos,conexion);
+            conexion.Open();
+
+            using (SqliteDataReader lector = comandoPres.ExecuteReader())
+            {
+                while (lector.Read())
+                {
+                    Presupuesto presupuestoLeido = new Presupuesto();
+                    presupuestoLeido.IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]);
+                    presupuestoLeido.IdCliente = Convert.ToInt32(lector["IdCliente"]);
+                    presupuestoLeido.FechaCreacion = lector["FechaCreacion"].ToString();
+
+                    listaPres.Add(presupuestoLeido);
+                }
+            }
+            conexion.Close();
+        }
+
+        ListaPresupuestosViewModel nuevo = new ListaPresupuestosViewModel(listaCli, listaPres, listaDet, listaProd);
+        return nuevo;
+    }
+// ----
 
 // ----
     public void CrearPresupuesto(Presupuesto presupuesto)

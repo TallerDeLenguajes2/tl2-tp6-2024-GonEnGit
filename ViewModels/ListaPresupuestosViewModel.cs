@@ -13,7 +13,7 @@ public class ListaPresupuestosViewModel
     public ListaPresupuestosViewModel(List<Cliente> cli, List<Presupuesto> pres, List<PresupuestoDetalle> det, List<Producto> prod)
     {
         clientes = cli;
-        productos = prod;
+        presupuestos = pres;
         detalles = det;
         productos = prod;
     }

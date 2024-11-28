@@ -2,6 +2,7 @@
 @using tl2_tp6_2024_GonEnGit.Models
 
 @using EspacioModels
+@using EspacioViewModels
 
 @model Presupuesto
 
@@ -9,8 +10,8 @@
     <form asp-controller="Presupuesto" asp-action="CrearPresupuesto" class="p-2">
         <legend>Nuevo Presupuesto</legend>
         <article class="form-group">
-            <label asp-for="@Model.IdCliente" class="form-label">Nombre: </label>
-            <input asp-for="@Model.IdCliente" class="form-control">
+            <label asp-for="@Model.IdCliente" class="form-label">Id:</label>
+            <input asp-for="@Model.IdCliente" class="form-control" readonly>
         </article>
         <article class="my-2 form-group">
             <label asp-for="@Model.FechaCreacion" class="form-label">Fecha: </label>

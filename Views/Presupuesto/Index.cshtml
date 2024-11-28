@@ -6,7 +6,7 @@
 
 @model PresupuestoViewModel
 
-<h1 class="px-3 display-6">Clientes</h1>
+<h1 class="px-3 display-6">Presupuestos</h1>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 @foreach (Presupuesto pres in Model.Presupuestos)
 {
@@ -14,20 +14,20 @@
     <table class="table table-striped table-bordered table-secondary align-middle">
         <thead class="font-weight-bold">
             <tr>
-                <td class="col-sm-1">Id</td>
+                <td class="col-sm-1">Id Presupuesto</td>
                 <td class="col-sm-2">Cliente</td>
                 <td class="col-sm-1">Fecha</td>
-                <td class="col-sm-1">+ Producto</td>
+                <td class="col-sm-1">Eliminar</td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>@pres.IdCliente</td>
+                <td>@pres.IdPresupuesto</td>
                 <td>@Model.Clientes.FirstOrDefault(cli => cli.IdCliente == pres.IdCliente).Nombre</td>
                 <td>@pres.FechaCreacion</td>
                 <td>
-                    <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@pres.IdPresupuesto">
-                        <i class="bi bi-bag-plus"></i>
+                    <a asp-controller="Presupuesto" asp-action="BorrarPresupuesto" asp-route-id="@pres.IdPresupuesto">
+                        <i class="bi bi-trash"></i>
                     </a>
                 </td>
             </tr>
@@ -36,6 +36,7 @@
 </div>
 }
 <article class="d-flex justify-content-around">
-    <a class="btn btn-outline-info bg-dark" asp-controller="Presupuesto" asp-action="ListarPresupuestos">Presupuestos</a>
+    <a class="btn btn-outline-info bg-dark" asp-controller="Presupuesto" asp-action="ListarPresupuestos">
+        Ver Detalles
+    </a>
 </article>
-

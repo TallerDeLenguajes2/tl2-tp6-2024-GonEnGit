@@ -1,6 +1,7 @@
 
 namespace EspacioRepositorios;
 
+using System.Data;
 using System.Runtime.InteropServices;
 using EspacioModels;
 using EspacioViewModels;
@@ -159,7 +160,7 @@ public class PresupuestoRepository
 // ----
 
 // ----
-    public void CrearPresupuesto(Presupuesto presupuesto)
+    public void CrearPresupuesto(Presupuesto pres)
     {
         string consulta = @"INSERT INTO Presupuesto(idCliente, FechaCreacion) VALUES (@idCli, @fecha)";
 
@@ -168,8 +169,8 @@ public class PresupuestoRepository
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
 
-            comando.Parameters.Add(new SqliteParameter("@idCli", presupuesto.IdCliente));
-            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
+            comando.Parameters.Add(new SqliteParameter("@idCli", pres.IdCliente));
+            comando.Parameters.Add(new SqliteParameter("@fecha", pres.FechaCreacion));
 
             comando.ExecuteNonQuery();
             conexion.Close();
@@ -217,7 +218,7 @@ public class PresupuestoRepository
 // ----
     public void AgregarDetalle(PresupuestoDetalle detalle)
     {
-        string consulta = @"INSERT INTO PresupuestoDetalle(idPresupuesto, idProducto, cantidad) VALUES (@idPres, @idProd, @cant)";
+        string consulta = @"INSERT INTO PresupuestoDetalle(idPresupuesto, idProducto, Cantidad) VALUES (@idPres, @idProd, @cant)";
 
         using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
         {
@@ -235,6 +236,22 @@ public class PresupuestoRepository
 // ----
 
 // ----
+    public void BorrarDetalleUnico(int nroPres, int nroProd)
+    {
+        string consulta = "DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @idPres AND idProducto = @idProd";
+
+        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta,conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@idPres", nroPres));
+            comando.Parameters.Add(new SqliteParameter("@idProd", nroProd));
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
     public void BorrarDetalles(int id)
     {
         string consulta = @"DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @id";
@@ -243,6 +260,7 @@ public class PresupuestoRepository
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
+
             comando.Parameters.Add(new SqliteParameter("@id", id));
             comando.ExecuteNonQuery();
             conexion.Close();

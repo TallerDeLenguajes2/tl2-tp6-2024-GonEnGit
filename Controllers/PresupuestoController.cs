@@ -41,10 +41,18 @@ public class PresupuestoController : Controller
     // ----
 
     // ----
-    [HttpPost("CrearPresupuesto")]
-    public IActionResult CrearPresupuesto(Presupuesto presupuesto)
+    [HttpGet("CrearPresupuesto")]
+    public IActionResult CrearPresupuesto(int id)
     {
-        repoPresupuesto.CrearPresupuesto(presupuesto);
+        Presupuesto nuevo = new Presupuesto();
+        nuevo.IdCliente = id;
+        return View(nuevo);
+    }
+
+    [HttpPost("CrearPresupuesto")]
+    public IActionResult CrearPresupuesto(Presupuesto pres)
+    {
+        repoPresupuesto.CrearPresupuesto(pres);
         return RedirectToAction("Index");
     }
     // ----
@@ -77,20 +85,19 @@ public class PresupuestoController : Controller
     public IActionResult AgregarDetalle(PresupuestoDetalle detalle)
     {
         repoPresupuesto.AgregarDetalle(detalle);
-        return RedirectToAction("Index");
+        return RedirectToAction("ListarPresupuestos");
     }
     // ----
 
-
     // ----
-    // no creo que se pueda borra los detalles de a 1 todavia...
-    // como identificas un detalle en particular? necesitas si o si
-    // los 3 valores, no tiene un idDetalle...
+    [HttpGet("BorrarDetalle")]
+    public IActionResult BorrarDetalle(int idPresupuesto, int idProducto)
+    {
+        repoPresupuesto.BorrarDetalleUnico(idPresupuesto,idProducto);
+        return RedirectToAction("ListarPresupuestos");
+    }
     // ----
 
-
-    // se puede hacer el ultimo sin view models?, Presupuesto tiene que tener una lista de productos
-    // traes todo con INNER JOIN y de ahí podes mostrar cada presupuesto con sus productos
 
     // esto no lo tocas todavia
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

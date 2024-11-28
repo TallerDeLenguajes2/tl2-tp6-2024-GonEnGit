@@ -37,6 +37,31 @@ public class ClienteRepository
 		}
 	}
 
+	public Cliente BuscarCliente(int idCliente)
+	{
+		Cliente clienteLeido = new Cliente();
+		string consulta = "SELECT * FROM Cliente WHERE idCliente = @idBuscado";
+
+		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		{
+			SqliteCommand comando = new SqliteCommand(consulta,conexion);
+			conexion.Open();
+
+			comando.Parameters.Add(new SqliteParameter("@idBuscado", idCliente));
+			using (SqliteDataReader lector = comando.ExecuteReader())
+			{
+				lector.Read();
+				clienteLeido.IdCliente = Convert.ToInt32(lector["idCliente"]);
+				clienteLeido.Nombre = lector["nombre"].ToString();
+				clienteLeido.Direccion = lector["direccion"].ToString();
+				clienteLeido.Telefono = lector["telefono"].ToString();
+			}
+			conexion.Close();
+		}
+
+		return clienteLeido;
+	}
+
 	public void CargarCliente(Cliente cliente)
 	{
 		string consulta = "INSERT INTO Cliente(nombre, direccion, telefono) VALUES (@nom, @dir, @tel)";

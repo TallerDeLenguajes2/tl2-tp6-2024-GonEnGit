@@ -5,7 +5,7 @@
 
 @model ListaPresupuestosViewModel
 
-<h1 class="px-3 display-6">Presupuestos</h1>
+<h1 class="px-3 display-6">Detalles de Presupuestos</h1>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 @foreach (Presupuesto presu in Model.presupuestos)
 {
@@ -14,21 +14,58 @@
         <thead class="font-weight-bold">
             <tr>
                 <td class="col-sm-1">Id</td>
-                <td class="col-sm-1">Nombre</td>
+                <td class="col-sm-2">Nombre</td>
                 <td class="col-sm-1">Fecha</td>
-                <td colspan = "3">Productos</td>
+                <td class="col-sm-4" colspan = "3">Productos</td>
             </tr>
         </thead>
         <tbody>
             <td>@presu.IdPresupuesto</td>
             <td>@Model.clientes.FirstOrDefault(cli => cli.IdCliente == presu.IdCliente).Nombre</td>
             <td>@presu.FechaCreacion</td>
-            @foreach (Producto prod in Model.productos)
-            {
-                <td>
-                    @prod.Id - @prod.Descripcion - $@prod.Precio
-                </td>
-            }
+            <td>
+                @if (Model.detalles.Any(det => det.IdPresupuesto == presu.IdPresupuesto))
+                {
+                <table class="m-0 mb-1 w-100 table table-striped table-success">
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>Descripcion</td>
+                            <td>Cantidad</td>
+                            <td>- Producto</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (PresupuestoDetalle det in Model.detalles)
+                        {
+                            @foreach (Producto prod in Model.productos)
+                            {
+                                @if (prod.Id == det.IdProducto && det.IdPresupuesto == presu.IdPresupuesto)
+                                {
+                                    <tr>
+                                        <td>@prod.Id</td>
+                                        <td>@prod.Descripcion</td>
+                                        <td>@det.Cantidad</td>
+                                        <td>
+                                            <a asp-controller="Presupuesto" asp-action="BorrarDetalle" 
+                                            asp-route-idPresupuesto="@presu.IdPresupuesto" 
+                                            asp-route-idProducto="@prod.Id">
+                                                <i class="bi bi-bag-dash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+                }
+                <article class="m-0 d-flex justify-content-center">
+                    <a asp-controller="Presupuesto" asp-action="AgregarDetalle" asp-route-id="@presu.IdPresupuesto">
+                        <i class="bi bi-bag-plus"></i>
+                    </a>
+                </article>
+            </td>
         </tbody>
     </table>
 </div>

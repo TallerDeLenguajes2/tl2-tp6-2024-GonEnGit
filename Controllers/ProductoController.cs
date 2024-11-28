@@ -2,22 +2,24 @@
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.Metadata;
+
 using tl2_tp6_2024_GonEnGit.Models;
 
 using EspacioModels;
-using EspacioRepositorios;
+using EspacioInterfaces;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
 public class ProductoController : Controller
 {
     private readonly ILogger<ProductoController> _logger;
-    private ProductoRepository repoProducto;
+    private readonly IProductoRepository _ProductoRepository;
 
-    public ProductoController(ILogger<ProductoController> logger)
+    public ProductoController(ILogger<ProductoController> logger, IProductoRepository productoRepository)
     {
         _logger = logger;
-        repoProducto = new ProductoRepository();
+        _ProductoRepository = productoRepository;
     }
 
 // ----
@@ -28,7 +30,7 @@ public class ProductoController : Controller
     [HttpGet("ListarProducto")]
     public IActionResult Index()
     {
-        List<Producto> lista = repoProducto.ListarProducto();
+        List<Producto> lista = _ProductoRepository.ListarProducto();
         return View(lista);
     }
 // ----
@@ -56,7 +58,7 @@ public class ProductoController : Controller
     [HttpPost("RegistrarProducto")]
     public IActionResult RegistrarProducto(Producto producto)
     {
-        repoProducto.CargarNuevoProducto(producto);
+        _ProductoRepository.CargarNuevoProducto(producto);
         return RedirectToAction("Index");
     }
 // ----
@@ -66,14 +68,14 @@ public class ProductoController : Controller
     [HttpGet("ActualizarProducto")]
     public IActionResult ActualizarProducto(int id)
     {
-        List<Producto> lista = repoProducto.ListarProducto();
+        List<Producto> lista = _ProductoRepository.ListarProducto();
         return View(lista.FirstOrDefault(producto => producto.Id == id));
     }
 
     [HttpPost("ActualizarProducto")]
     public IActionResult ActualizarProducto(Producto producto)
     {
-        repoProducto.ActualizarProducto(producto);
+        _ProductoRepository.ActualizarProducto(producto);
         return RedirectToAction("Index");
     }
 // ----
@@ -84,7 +86,7 @@ public class ProductoController : Controller
     [HttpGet("BorrarProducto")]
     public IActionResult BorrarProducto(int id)
     {
-        repoProducto.BorrarProducto(id);
+        _ProductoRepository.BorrarProducto(id);
         return RedirectToAction("Index");
     }
 // ----

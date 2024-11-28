@@ -8,17 +8,20 @@ using tl2_tp6_2024_GonEnGit.Models;
 using EspacioModels;
 using EspacioViewModels;
 using EspacioRepositorios;
+using EspacioInterfaces;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
 public class PresupuestoController : Controller
 {
     private readonly ILogger<PresupuestoController> _logger;
+    private readonly IProductoRepository _ProductoRepository;
     private PresupuestoRepository repoPresupuesto;
 
-    public PresupuestoController(ILogger<PresupuestoController> logger)
+    public PresupuestoController(ILogger<PresupuestoController> logger, IProductoRepository productoRepository)
     {
         _logger = logger;
+        _ProductoRepository = productoRepository;
         repoPresupuesto = new PresupuestoRepository();
     }
 
@@ -72,11 +75,10 @@ public class PresupuestoController : Controller
     [HttpGet("AgregarDetalle")]
     public IActionResult AgregarDetalle(int id)
     {
-        ProductoRepository repoProducto = new ProductoRepository();
         PresupuestoDetalle detalle = new PresupuestoDetalle();
 
         detalle.IdPresupuesto = id;
-        detalle.Productos = repoProducto.ListarProducto();
+        detalle.Productos = _ProductoRepository.ListarProducto();
 
         return View(detalle);
     }

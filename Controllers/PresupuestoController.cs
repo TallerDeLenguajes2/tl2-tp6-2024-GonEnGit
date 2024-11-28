@@ -1,13 +1,12 @@
 
-/* este archivo quedaria obsoleto en teoria */
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+
 using tl2_tp6_2024_GonEnGit.Models;
 
 using EspacioModels;
 using EspacioViewModels;
-using EspacioRepositorios;
 using EspacioInterfaces;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
@@ -16,20 +15,20 @@ public class PresupuestoController : Controller
 {
     private readonly ILogger<PresupuestoController> _logger;
     private readonly IProductoRepository _ProductoRepository;
-    private PresupuestoRepository repoPresupuesto;
+    private readonly IPresupuestoRepository _PresupuestoRepository;
 
-    public PresupuestoController(ILogger<PresupuestoController> logger, IProductoRepository productoRepository)
+    public PresupuestoController(ILogger<PresupuestoController> logger, IProductoRepository productoRepository, IPresupuestoRepository PresupuestoRepository)
     {
         _logger = logger;
         _ProductoRepository = productoRepository;
-        repoPresupuesto = new PresupuestoRepository();
+        _PresupuestoRepository = PresupuestoRepository;
     }
 
     // ----
     [HttpGet("ConsultarPresupuesto")]
     public IActionResult Index()
     {
-        PresupuestoViewModel modelo = repoPresupuesto.ConsultarPresupuestos();
+        PresupuestoViewModel modelo = _PresupuestoRepository.ConsultarPresupuestos();
         return View(modelo);
     }
     // ----
@@ -38,7 +37,7 @@ public class PresupuestoController : Controller
     [HttpGet("ListarPresupuestos")]
     public IActionResult ListarPresupuestos()
     {
-        ListaPresupuestosViewModel modelo = repoPresupuesto.ListarPresupuestos();
+        ListaPresupuestosViewModel modelo = _PresupuestoRepository.ListarPresupuestos();
         return View(modelo);
     }
     // ----
@@ -55,7 +54,7 @@ public class PresupuestoController : Controller
     [HttpPost("CrearPresupuesto")]
     public IActionResult CrearPresupuesto(Presupuesto pres)
     {
-        repoPresupuesto.CrearPresupuesto(pres);
+        _PresupuestoRepository.CrearPresupuesto(pres);
         return RedirectToAction("Index");
     }
     // ----
@@ -64,8 +63,8 @@ public class PresupuestoController : Controller
     [HttpGet("BorrarPresupuesto")]
     public IActionResult BorrarPresupuesto(int id)
     {
-        repoPresupuesto.BorrarDetalles(id);
-        repoPresupuesto.BorrarPresupuesto(id);
+        _PresupuestoRepository.BorrarDetalles(id);
+        _PresupuestoRepository.BorrarPresupuesto(id);
         return RedirectToAction("Index");
     }
     // ----
@@ -86,7 +85,7 @@ public class PresupuestoController : Controller
     [HttpPost("AgregarDetalle")]
     public IActionResult AgregarDetalle(PresupuestoDetalle detalle)
     {
-        repoPresupuesto.AgregarDetalle(detalle);
+        _PresupuestoRepository.AgregarDetalle(detalle);
         return RedirectToAction("ListarPresupuestos");
     }
     // ----
@@ -95,7 +94,7 @@ public class PresupuestoController : Controller
     [HttpGet("BorrarDetalle")]
     public IActionResult BorrarDetalle(int idPresupuesto, int idProducto)
     {
-        repoPresupuesto.BorrarDetalleUnico(idPresupuesto,idProducto);
+        _PresupuestoRepository.BorrarDetalleUnico(idPresupuesto,idProducto);
         return RedirectToAction("ListarPresupuestos");
     }
     // ----

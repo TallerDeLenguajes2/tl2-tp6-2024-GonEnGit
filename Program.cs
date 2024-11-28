@@ -1,9 +1,10 @@
+
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Session;
+using Microsoft.Data.Sqlite;
 
 using EspacioInterfaces;
 using EspacioRepositorios;
-using Microsoft.Data.Sqlite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ builder.Services.AddControllersWithViews();
 
 // Tuyos
 builder.Services.AddSingleton<IProductoRepository, ProductoRepository>();
+builder.Services.AddSingleton<IPresupuestoRepository, PresupuestoRepository>();
+builder.Services.AddSingleton<IClienteRepository, ClienteRepository>();
+
+
 
 // la cadena de conexion es un poco diferente de las interfaces
 // a esta la ligas con la configuracion de "ConnectionStrings" en appsettings.json

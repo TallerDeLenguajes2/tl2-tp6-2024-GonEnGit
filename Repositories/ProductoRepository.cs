@@ -1,19 +1,21 @@
+
 namespace EspacioRepositorios;
+
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 using EspacioModels;
 using EspacioInterfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 
 public class ProductoRepository : IProductoRepository
 {
 // ahora la cadena de conexion es privada y la pasas
 // a un constructor usando la inyeccion
-    private readonly string _CadenaDeConecxion;
-    public ProductoRepository(string CadenaDeConecxion)
+    private readonly string _CadenaDeConexion;
+    public ProductoRepository(string CadenaDeConexion)
     {
-        _CadenaDeConecxion = CadenaDeConecxion;
+        _CadenaDeConexion = CadenaDeConexion;
     }
 
     public void CargarNuevoProducto(Producto producto) // esto te esta dando un error 405
@@ -21,7 +23,7 @@ public class ProductoRepository : IProductoRepository
     // no te comas las @, estan para mapear los atributos mas abajo
         string consulta = @"INSERT INTO Producto(Descripcion, Precio) VALUES (@desc, @precio)";
 
-        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConecxion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             var comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
@@ -36,7 +38,7 @@ public class ProductoRepository : IProductoRepository
     {
         string consulta = @"UPDATE Producto SET Descripcion = @descripcion, Precio = @precio WHERE idProducto = @id";
 
-        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConecxion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
@@ -55,7 +57,7 @@ public class ProductoRepository : IProductoRepository
         List<Producto> lista = new List<Producto>();
         string consulta = @"SELECT * FROM Producto";
 
-        using(SqliteConnection conexion = new SqliteConnection(_CadenaDeConecxion))
+        using(SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
@@ -81,7 +83,7 @@ public class ProductoRepository : IProductoRepository
     {
         string consulta = @"DELETE FROM Producto WHERE idProducto = @id";
 
-        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConecxion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
@@ -98,7 +100,7 @@ public class ProductoRepository : IProductoRepository
 
         string consulta = $"SELECT {campo} FROM {tabla}";
 
-        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConecxion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comando = new SqliteCommand(consulta, conexion);
             conexion.Open();

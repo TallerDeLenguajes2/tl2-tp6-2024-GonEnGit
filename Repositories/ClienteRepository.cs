@@ -1,20 +1,29 @@
+
 namespace EspacioRepositorios;
 
-using System.Runtime.InteropServices;
-using EspacioModels;
-using Microsoft.Data.Sqlite;
 using SQLitePCL;
+using System.Runtime.InteropServices;
 
-public class ClienteRepository
+using EspacioModels;
+using EspacioInterfaces;
+using Microsoft.Data.Sqlite;
+
+// resulta que si falta la implementacion del repositorio,
+// en program, te va a dar un error cuando trates de declararlo
+public class ClienteRepository : IClienteRepository
 {
-	string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
+	private readonly string _CadenaDeConexion;
+	public ClienteRepository (string CadenaDeConexion)
+	{
+		_CadenaDeConexion = CadenaDeConexion;
+	}
 
 	public List<Cliente> ListarClientes()
 	{
 		List<Cliente> lista = new List<Cliente>();
 		string consulta = "SELECT * From Cliente";
 
-		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
 		{
 			SqliteCommand comando = new SqliteCommand(consulta, conexion);
 			conexion.Open();
@@ -42,7 +51,7 @@ public class ClienteRepository
 		Cliente clienteLeido = new Cliente();
 		string consulta = "SELECT * FROM Cliente WHERE idCliente = @idBuscado";
 
-		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
 		{
 			SqliteCommand comando = new SqliteCommand(consulta,conexion);
 			conexion.Open();
@@ -66,7 +75,7 @@ public class ClienteRepository
 	{
 		string consulta = "INSERT INTO Cliente(nombre, direccion, telefono) VALUES (@nom, @dir, @tel)";
 
-		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
 		{
 			SqliteCommand comando = new SqliteCommand(consulta, conexion);
 			conexion.Open();
@@ -84,7 +93,7 @@ public class ClienteRepository
 	{
 		string consulta = "UPDATE Cliente SET nombre = @nom, direccion = @dir, telefono = @tel WHERE idCliente = @id";
 
-		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
 		{
 			SqliteCommand comando = new SqliteCommand(consulta, conexion);
 			conexion.Open();
@@ -103,7 +112,7 @@ public class ClienteRepository
 	{
 		string consulta = @"DELETE FROM Cliente WHERE idCliente = @id";
 
-		using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+		using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
 		{
 			SqliteCommand comando = new SqliteCommand(consulta, conexion);
 			conexion.Open();

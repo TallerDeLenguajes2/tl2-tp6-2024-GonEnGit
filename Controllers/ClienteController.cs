@@ -6,25 +6,26 @@ using tl2_tp6_2024_GonEnGit.Models;
 
 using EspacioModels;
 using EspacioRepositorios;
+using EspacioInterfaces;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
 public class ClienteController : Controller
 {
 	private readonly ILogger<ClienteController> _logger;
-	private ClienteRepository repoCliente;
+	private readonly IClienteRepository _ClienteRepository;
 
-	public ClienteController(ILogger<ClienteController> logger)
+	public ClienteController(ILogger<ClienteController> logger, IClienteRepository ClienteRepository)
 	{
 		_logger = logger;
-		repoCliente = new ClienteRepository();
+		_ClienteRepository = ClienteRepository;
 	}
 
 // ----
 	[HttpGet("ListarClientes")]
 	public IActionResult Index()
 	{
-		List<Cliente> lista = repoCliente.ListarClientes();
+		List<Cliente> lista = _ClienteRepository.ListarClientes();
 		return View(lista);
 	}
 // ----
@@ -40,7 +41,7 @@ public class ClienteController : Controller
 	[HttpPost("CargarCliente")]
 	public IActionResult CargarCliente(Cliente cliente)
 	{
-		repoCliente.CargarCliente(cliente);
+		_ClienteRepository.CargarCliente(cliente);
 		return RedirectToAction("Index");
 	}
 // ----
@@ -50,14 +51,14 @@ public class ClienteController : Controller
 	[HttpGet("ActualizarCliente")]
 	public IActionResult ActualizarCliente(int id)
 	{
-		List<Cliente> lista = repoCliente.ListarClientes();
+		List<Cliente> lista = _ClienteRepository.ListarClientes();
 		return View(lista.FirstOrDefault(cliente => cliente.IdCliente == id));
 	}
 
 	[HttpPost("ActualizarCliente")]
 	public IActionResult ActualizarCliente(Cliente cliente)
 	{
-		repoCliente.ActualizarCliente(cliente);
+		_ClienteRepository.ActualizarCliente(cliente);
 		return RedirectToAction("Index");
 	}
 // ----
@@ -67,7 +68,7 @@ public class ClienteController : Controller
 	[HttpGet("BorrarCliente")]
 	public IActionResult BorrarCliente(int id)
 	{
-		repoCliente.BorrarCliente(id);
+		_ClienteRepository.BorrarCliente(id);
 		return RedirectToAction("Index");
 	}
 // ----

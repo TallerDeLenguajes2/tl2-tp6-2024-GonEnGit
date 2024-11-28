@@ -1,22 +1,136 @@
 
-namespace EspacioRepositorios;
-
 using System.Data;
 using System.Runtime.InteropServices;
-using EspacioModels;
-using EspacioViewModels;
-
-using Microsoft.Data.Sqlite;
 using SQLitePCL;
 
+namespace EspacioRepositorios;
 
-public class PresupuestoRepository
+using EspacioModels;
+using EspacioViewModels;
+using EspacioInterfaces;
+
+using Microsoft.Data.Sqlite;
+
+
+public class PresupuestoRepository : IPresupuestoRepository
 {
-    string cadenaDeConexion = "Data Source = db\\Tienda.db;Cache=Shared";
+    private readonly string _CadenaDeConexion;
+    public PresupuestoRepository (string CadenaDeConexion)
+    {
+        _CadenaDeConexion = CadenaDeConexion;
+    }
 
-// todos estos metodos tienen que cambiar, ya no traes un string si no un objeto
+// ---- Presupuestos
+    public void CrearPresupuesto(Presupuesto pres)
+    {
+        string consulta = @"INSERT INTO Presupuesto(idCliente, FechaCreacion) VALUES (@idCli, @fecha)";
 
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@idCli", pres.IdCliente));
+            comando.Parameters.Add(new SqliteParameter("@fecha", pres.FechaCreacion));
+
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
+    // ---- ----
+
+    public void ActualizarPresupuesto(Presupuesto presupuesto)
+    {
+        string consulta = "UPDATE Presupuesto SET idCliente = @idCli, FechaCreacion = @fecha WHERE idPresupuesto = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@idCli", presupuesto.IdCliente));
+            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
+            comando.Parameters.Add(new SqliteParameter("@id", presupuesto.IdPresupuesto));
+
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
+    // ---- ----
+
+    public void BorrarPresupuesto(int id)
+    {
+        string consulta = @"DELETE FROM Presupuesto WHERE idPresupuesto = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+            comando.Parameters.Add(new SqliteParameter("@id", id));
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
 // ----
+
+// ---- Detalles
+    public void AgregarDetalle(PresupuestoDetalle detalle)
+    {
+        string consulta = @"INSERT INTO PresupuestoDetalle(idPresupuesto, idProducto, Cantidad) VALUES (@idPres, @idProd, @cant)";
+
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@idPres", detalle.IdPresupuesto));
+            comando.Parameters.Add(new SqliteParameter("@idProd", detalle.IdProducto));
+            comando.Parameters.Add(new SqliteParameter("@cant", detalle.Cantidad));
+
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
+    // ---- ----
+
+    public void BorrarDetalleUnico(int nroPres, int nroProd)
+    {
+        string consulta = "DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @idPres AND idProducto = @idProd";
+
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta,conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@idPres", nroPres));
+            comando.Parameters.Add(new SqliteParameter("@idProd", nroProd));
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+
+    // ---- ----
+
+    public void BorrarDetalles(int id)
+    {
+        string consulta = @"DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @id";
+
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
+        {
+            SqliteCommand comando = new SqliteCommand(consulta, conexion);
+            conexion.Open();
+
+            comando.Parameters.Add(new SqliteParameter("@id", id));
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+    }
+// ----
+
+// ---- View Models
     public PresupuestoViewModel ConsultarPresupuestos()
     {
         List<Cliente> listaCli = new List<Cliente>();
@@ -26,7 +140,7 @@ public class PresupuestoRepository
         string consultaClientes = "SELECT * FROM Cliente";
         string consultaPresupuestos = "SELECT * FROM Presupuesto";
 
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comandoCli = new SqliteCommand(consultaClientes, conexion);
             conexion.Open();
@@ -68,9 +182,9 @@ public class PresupuestoRepository
 
         return modelo;
     }
-// ----
 
-// ---- revisa 1 por 1
+    // ---- ----
+
     public ListaPresupuestosViewModel ListarPresupuestos()
     {
         List<Cliente> listaCli = new List<Cliente>();
@@ -79,7 +193,7 @@ public class PresupuestoRepository
         List<Producto> listaProd = new List<Producto>();
 
         string consultaClientes = "SELECT * FROM Cliente";
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
+        using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
             SqliteCommand comandoCli = new SqliteCommand(consultaClientes, conexion);
             conexion.Open();
@@ -97,11 +211,9 @@ public class PresupuestoRepository
                     listaCli.Add(clienteLeido);
                 }
             }
-            //conexion.Close();
     // ----
             string consultaPresupuestos = "SELECT * FROM Presupuesto";
             SqliteCommand comandoPres = new SqliteCommand(consultaPresupuestos,conexion);
-            //conexion.Open();
 
             using (SqliteDataReader lectorPres = comandoPres.ExecuteReader())
             {
@@ -115,11 +227,9 @@ public class PresupuestoRepository
                     listaPres.Add(presupuestoLeido);
                 }
             }
-            //conexion.Close();
     // ----
             string consultaDetalles = "SELECT * FROM PresupuestoDetalle";
             SqliteCommand comandoDets = new SqliteCommand(consultaDetalles,conexion);
-            //conexion.Open();
 
             using (SqliteDataReader lectorDet = comandoDets.ExecuteReader())
             {
@@ -133,11 +243,9 @@ public class PresupuestoRepository
                     listaDet.Add(detalleLeido);
                 }
             }
-            //conexion.Close();
     // ----
             string consultaProductos = "SELECT * FROM Producto";
             SqliteCommand comandoProd = new SqliteCommand(consultaProductos,conexion);
-            //conexion.Open();
 
             using (SqliteDataReader lectorProd = comandoProd.ExecuteReader())
             {
@@ -156,115 +264,6 @@ public class PresupuestoRepository
 
         ListaPresupuestosViewModel nuevo = new ListaPresupuestosViewModel(listaCli, listaPres, listaDet, listaProd);
         return nuevo;
-    }
-// ----
-
-// ----
-    public void CrearPresupuesto(Presupuesto pres)
-    {
-        string consulta = @"INSERT INTO Presupuesto(idCliente, FechaCreacion) VALUES (@idCli, @fecha)";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-
-            comando.Parameters.Add(new SqliteParameter("@idCli", pres.IdCliente));
-            comando.Parameters.Add(new SqliteParameter("@fecha", pres.FechaCreacion));
-
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
-// ----
-
-// ----
-    public void ActualizarPresupuesto(Presupuesto presupuesto)
-    {
-        string consulta = "UPDATE Presupuesto SET idCliente = @idCli, FechaCreacion = @fecha WHERE idPresupuesto = @id";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-
-            comando.Parameters.Add(new SqliteParameter("@idCli", presupuesto.IdCliente));
-            comando.Parameters.Add(new SqliteParameter("@fecha", presupuesto.FechaCreacion));
-            comando.Parameters.Add(new SqliteParameter("@id", presupuesto.IdPresupuesto));
-
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
-// ----
-
-// ----
-    public void BorrarPresupuesto(int id)
-    {
-        string consulta = @"DELETE FROM Presupuesto WHERE idPresupuesto = @id";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-            comando.Parameters.Add(new SqliteParameter("@id", id));
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
-
-// ---------
-
-// ----
-    public void AgregarDetalle(PresupuestoDetalle detalle)
-    {
-        string consulta = @"INSERT INTO PresupuestoDetalle(idPresupuesto, idProducto, Cantidad) VALUES (@idPres, @idProd, @cant)";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-
-            comando.Parameters.Add(new SqliteParameter("@idPres", detalle.IdPresupuesto));
-            comando.Parameters.Add(new SqliteParameter("@idProd", detalle.IdProducto));
-            comando.Parameters.Add(new SqliteParameter("@cant", detalle.Cantidad));
-
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
-// ----
-
-// ----
-    public void BorrarDetalleUnico(int nroPres, int nroProd)
-    {
-        string consulta = "DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @idPres AND idProducto = @idProd";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta,conexion);
-            conexion.Open();
-
-            comando.Parameters.Add(new SqliteParameter("@idPres", nroPres));
-            comando.Parameters.Add(new SqliteParameter("@idProd", nroProd));
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-    }
-
-    public void BorrarDetalles(int id)
-    {
-        string consulta = @"DELETE FROM PresupuestoDetalle WHERE idPresupuesto = @id";
-
-        using (SqliteConnection conexion = new SqliteConnection(cadenaDeConexion))
-        {
-            SqliteCommand comando = new SqliteCommand(consulta, conexion);
-            conexion.Open();
-
-            comando.Parameters.Add(new SqliteParameter("@id", id));
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
     }
 // ----
 }

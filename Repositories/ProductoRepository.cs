@@ -1,12 +1,13 @@
 
-namespace EspacioRepositorios;
-
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using EspacioModels;
 using EspacioInterfaces;
 using Microsoft.Data.Sqlite;
+
+namespace EspacioRepositorios;
+
 
 public class ProductoRepository : IProductoRepository
 {

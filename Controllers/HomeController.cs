@@ -3,6 +3,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp6_2024_GonEnGit.Models;
 
+using EspacioViewModels;
+
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
 public class HomeController : Controller
@@ -16,7 +18,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        SharedViewModel barra = new SharedViewModel();
+        barra.Rol = HttpContext.Session.GetString("Rol");
+        return View(barra);
     }
 
     public IActionResult Privacy()

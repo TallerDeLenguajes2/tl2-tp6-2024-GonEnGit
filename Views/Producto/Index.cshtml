@@ -1,9 +1,11 @@
 
 <!-- Entonces, tambien tenes que llamar los archivos en estos casos -->
 @using tl2_tp6_2024_GonEnGit.Models
-@using EspacioModels
 
-@model List<Producto>
+@using EspacioModels
+@using EspacioViewModels
+
+@model ProductoViewModel
 
 
 <!-- Ctr + c termina la ejecucion del proyecto -->
@@ -16,31 +18,37 @@
                 <td>Id</td>
                 <td>Descripcion</td>
                 <td>Precio</td>
-                <td>Actualizar</td>
-                <td>Borrar</td>
+                @if (Model.Rol == "Administrador")
+                {
+                    <td>Actualizar</td>
+                    <td>Borrar</td>
+                }
             </tr>
         </thead>
         <tbody>
-            @foreach (Producto prod in Model)
+            @foreach (Producto prod in Model.productos)
             {
             <tr>
                 <td>@prod.Id</td>
                 <td>@prod.Descripcion</td>
                 <td>$ @prod.Precio</td>
-                <td>
                 <!-- cuidado con los labels de asp, en el 'asp-route-X' -->
                 <!-- X es el nombre de la variable como la estas usando -->
                 <!-- osea, con el nombre como llega al View -->
-                    <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
-                        <i class="bi bi-pencil-square"></i>
-                    </a>
-                </td>
-                <td>
-                    <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
-                    onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
+                @if (Model.Rol == "Administrador")
+                {
+                    <td>
+                        <a asp-controller="Producto" asp-action="ActualizarProducto" asp-route-id="@prod.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Producto" asp-action="BorrarProducto" asp-route-id="@prod.Id"
+                        onclick="return confirm('Estas seguro de que quieres borrar este roducto?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                }
             </tr>
             }
         </tbody>

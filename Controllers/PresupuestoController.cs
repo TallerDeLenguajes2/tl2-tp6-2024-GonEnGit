@@ -29,6 +29,7 @@ public class PresupuestoController : Controller
     public IActionResult Index()
     {
         PresupuestoViewModel modelo = _PresupuestoRepository.ConsultarPresupuestos();
+        modelo.Rol = HttpContext.Session.GetString("Rol");
         return View(modelo);
     }
     // ----

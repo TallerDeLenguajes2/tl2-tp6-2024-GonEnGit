@@ -1,10 +1,14 @@
 
 using tl2_tp6_2024_GonEnGit.Models;
 
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;	// estas dos incluciones van simepre que queras usar cookies
+using Microsoft.AspNetCore.Http;
+
 using EspacioModels;
 using EspacioInterfaces;
-using Microsoft.AspNetCore.Mvc;
 using EspacioViewModels;
+using System.Runtime.InteropServices;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
 
@@ -20,16 +24,31 @@ public class UsuarioController : Controller
 	}
 
 
-	[HttpGet("BuscarUsuario")]
+	[HttpGet("Index")]
 	public IActionResult Index()
 	{
-		return View();
+		return View(new UsuarioViewModel{Rol = HttpContext.Session.GetString("Rol")});
 	}
-/*
-	[HttpPost("BuscarUsuario")]
+
+	[HttpPost("Index")]
 	public IActionResult Index(UsuarioViewModel usuarioBuscado)
 	{
-		_UsuarioRepository.BuscarUsuario(usuarioBuscado.Alias, usuarioBuscado.Pass);
-		return 
-	}*/
+		Usuario usuarioEncontrado = _UsuarioRepository.BuscarUsuario(usuarioBuscado.Alias, usuarioBuscado.Pass);
+		if (usuarioEncontrado == null) return View(usuarioEncontrado);
+
+		HttpContext.Session.SetString("Alias", usuarioEncontrado.Alias);
+		HttpContext.Session.SetString("Rol", usuarioEncontrado.Rol);
+
+		usuarioBuscado.Logeado = true;
+
+		//Console.WriteLine(HttpContext.Session.GetString("Alias"));
+
+		return RedirectToAction("Index", "Presupuesto");
+	}
+
+	public IActionResult LogOut()
+	{
+		HttpContext.Session.Clear();
+		return RedirectToAction("Index", "Usuario");
+	}
 }

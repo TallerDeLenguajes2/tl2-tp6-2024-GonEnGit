@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using tl2_tp6_2024_GonEnGit.Models;
 
 using EspacioModels;
+using EspacioViewModels;
 using EspacioRepositorios;
 using EspacioInterfaces;
 
@@ -25,8 +26,9 @@ public class ClienteController : Controller
 	[HttpGet("ListarClientes")]
 	public IActionResult Index()
 	{
-		List<Cliente> lista = _ClienteRepository.ListarClientes();
-		return View(lista);
+		ClienteViewModel nuevo = new ClienteViewModel(_ClienteRepository.ListarClientes());
+		nuevo.Rol = HttpContext.Session.GetString("Rol");
+		return View(nuevo);
 	}
 // ----
 

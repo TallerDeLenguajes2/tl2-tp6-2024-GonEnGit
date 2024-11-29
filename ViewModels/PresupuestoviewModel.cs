@@ -3,7 +3,7 @@ using EspacioModels;
 
 namespace EspacioViewModels;
 
-public class PresupuestoViewModel
+public class PresupuestoViewModel : SharedViewModel
 {
     public List<Presupuesto> Presupuestos;
     public List<Cliente> Clientes;

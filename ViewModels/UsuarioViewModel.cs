@@ -5,12 +5,18 @@ using System.Runtime.InteropServices;
 
 namespace EspacioViewModels;
 
-public class UsuarioViewModel
+public class UsuarioViewModel : SharedViewModel
 {
 	[Required]
-	public string Alias;
+	private string alias;
 
 	[Required]
 	[PasswordPropertyText(true)]
-	public string Pass;
+	private string pass;
+
+	private bool logeado;
+
+	public string Alias { get => alias; set => alias = value; }
+	public string Pass { get => pass; set => pass = value; }
+    public bool Logeado { get => logeado; set => logeado = value; }
 }

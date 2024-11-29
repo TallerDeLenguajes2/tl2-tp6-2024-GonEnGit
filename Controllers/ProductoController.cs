@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.Metadata;
 using tl2_tp6_2024_GonEnGit.Models;
 
 using EspacioModels;
+using EspacioViewModels;
 using EspacioInterfaces;
 
 namespace tl2_tp6_2024_GonEnGit.Controllers;
@@ -30,8 +31,9 @@ public class ProductoController : Controller
     [HttpGet("ListarProducto")]
     public IActionResult Index()
     {
-        List<Producto> lista = _ProductoRepository.ListarProducto();
-        return View(lista);
+        ProductoViewModel nuevo = new ProductoViewModel(_ProductoRepository.ListarProducto());
+        nuevo.Rol = HttpContext.Session.GetString("Rol");
+        return View(nuevo);
     }
 // ----
 

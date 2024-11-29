@@ -2,10 +2,11 @@
 
 namespace EspacioRepositorios;
 
+using SQLitePCL;
+
 using EspacioModels;
 using EspacioInterfaces;
 using Microsoft.Data.Sqlite;
-using SQLitePCL;
 
 public class UsuarioRepository : IUsuarioRepository
 {
@@ -24,6 +25,9 @@ public class UsuarioRepository : IUsuarioRepository
 		{
 			SqliteCommand comando = new SqliteCommand(consulta, conexion);
 			conexion.Open();
+
+			comando.Parameters.Add(new SqliteParameter("@alias", userName));
+			comando.Parameters.Add(new SqliteParameter("@contra", pass));
 
 			using (SqliteDataReader lector = comando.ExecuteReader())
 			{

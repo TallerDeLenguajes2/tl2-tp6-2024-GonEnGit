@@ -9,9 +9,9 @@ public class Usuario
 	private string contrasenia;
 	private string rol;
 
-	public int IdUsuario { get => idUsuario; set => idUsuario = value; }
-	public string Nombre { get => nombre; set => nombre = value; }
-	public string Alias { get => alias; set => alias = value; }
+    public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+    public string Nombre { get => nombre; set => nombre = value; }
+    public string Alias { get => alias; set => alias = value; }
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
-	public string Rol { get => rol; set => rol = value; }
+    public string Rol { get => rol; set => rol = value; }
 }

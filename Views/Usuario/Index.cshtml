@@ -1,0 +1,24 @@
+
+@using tl2_tp6_2024_GonEnGit.Models
+
+@using EspacioModels
+@using EspacioViewModels
+
+@model UsuarioViewModel
+
+<fieldset class="container border border-2 border-success rounded w-50">
+    <form asp-controller="Usuario" asp-action="Index" class="p-2">
+        <legend>Log In</legend>
+        <article class="form-group">
+            <label asp-for="@Model.Alias" class="form-label">Alias: </label>
+            <input asp-for="@Model.Alias" class="form-control">
+        </article>
+        <article class="my-2 form-group">
+            <label asp-for="@Model.Pass" class="form-label">Contraseña: </label>
+            <input type="password" asp-for="@Model.Pass" class="form-control">
+        </article>
+        <article class="p-3 d-flex justify-content-center">
+            <input type="submit" value="Registrar" class="btn btn-primary">
+        </article>
+    </form>
+</fieldset>

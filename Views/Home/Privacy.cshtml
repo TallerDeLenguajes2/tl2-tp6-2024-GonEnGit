@@ -3,4 +3,150 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<article>
+    @{
+        <p> Un ejemplo de Try-Catch-Finally</p>
+        try
+        {
+            int num1 = 10;
+            int num2 = 0;
+            int result = num1 / num2; // Esto generará una excepción
+            <p>El resultado de la división es: @result</p>
+        }
+        catch (DivideByZeroException ex)
+        {
+            <p> Si no hubiera Error se mostraria el resultado</p>
+            <p style="color:red;">Error: No se puede dividir por cero.</p>
+        }
+        finally
+        {
+            <p>Este mensaje siempre se mostrará.</p>
+        }
+    }
+</article>
+
+<!--
+No hace falta que hagas un Try-Catch-Finally para cantidad error
+podes usar 'catch(Exception e)' para indicar que se tiene que
+toma cualquier exepcion
+
+
+Algunas exepciones:
+
+// ----
+ArgumentNullException: cuando un argumento que se pasa a un método es null, pero el método no acepta valores null.
+
+Ejemplo:
+    string text = null;
+    Console.WriteLine(text.Length); // Lanza ArgumentNullException
+
+// ----
+ArgumentOutOfRangeException: cuando un argumento está fuera del rango permitido para el método.
+
+Ejemplo:
+    int[] numero = { 1, 2, 3 };
+    Console.WriteLine(numero[10]); // Lanza ArgumentOutOfRangeException
+
+// ----
+DivideByZeroException: cuando se intenta dividir un número entre cero.
+
+Ejemplo:
+    int result = 10 / 0; // Lanza DivideByZeroException
+
+// ----
+IndexOutOfRangeException: cuando se intenta acceder a un índice que no existe en un arreglo o colección.
+
+Ejemplo:
+    int[] numero = { 1, 2, 3 };
+    Console.WriteLine(numero[5]); // Lanza IndexOutOfRangeException
+
+// ----
+InvalidOperationException: cuando se intenta realizar una operación no válida para el estado actual del objeto.
+
+Ejemplo:
+    int lista = new List<int>().GetEnumerator();
+    lista.MoveNext();
+    lista.Current; // Lanza InvalidOperationException
+
+// ----
+NullReferenceException: cuando intentas acceder a un miembro de un objeto que es null.
+
+Ejemplo:
+    string text = null;
+    Console.WriteLine(text.Length); // Lanza NullReferenceException
+
+// ----
+FormatException: cuando el formato de un argumento no es válido.
+
+Ejemplo:
+    int number = int.Parse("abc"); // Lanza FormatException
+
+
+// ----
+OverflowException: cuando una operación aritmética, de conversión o de asignación produce un desbordamiento.
+
+Ejemplo:
+    checked
+    {
+        int number = int.MaxValue + 1; // Lanza OverflowException
+    }
+
+// ----
+StackOverflowException: cuando el tamaño del stack (pila de llamadas) excede su límite, generalmente debido a una recursión infinita.
+
+Ejemplo:
+    void Recursive() => Recursive(); // Lanza StackOverflowException
+
+// ----
+OutOfMemoryException: cuando no hay suficiente memoria para continuar la ejecución del programa.
+
+Ejemplo: Crear una gran cantidad de objetos o una lista infinita puede causar esto.
+
+// ----
+IOException: cuando ocurre un error en las operaciones de entrada/salida (lectura/escritura de archivos, etc.).
+
+Ejemplo:
+    using (var reader = new StreamReader("archivo_inexistente.txt"))
+    {
+        Console.WriteLine(reader.ReadToEnd()); // Lanza IOException
+    }
+
+// ----
+FileNotFoundException: cuando no se encuentra un archivo especificado.
+
+Ejemplo:
+    File.ReadAllText("no_existe.txt"); // Lanza FileNotFoundException
+
+// ----
+NotImplementedException: cuando se llama a un método que aún no está implementado.
+
+Ejemplo:
+    throw new NotImplementedException("Método aún no implementado.");
+
+// ----
+UnauthorizedAccessException: cuando el usuario no tiene los permisos necesarios para acceder a un recurso.
+
+Ejemplo:
+    File.WriteAllText("C:\\archivo.txt", "contenido"); // Lanza UnauthorizedAccessException si no tienes permisos
+
+// ----
+KeyNotFoundException: cuando se intenta acceder a una clave que no existe en un diccionario.
+
+Ejemplo:
+    var dict = new Dictionary<string, int>();
+    Console.WriteLine(dict["clave_inexistente"]); // Lanza KeyNotFoundException
+
+// ----
+TaskCanceledException: cuando se cancela una tarea en ejecución.
+
+Ejemplo:
+    var cts = new CancellationTokenSource();
+    cts.Cancel();
+    Task.Delay(1000, cts.Token).Wait(); // Lanza TaskCanceledException
+
+// ----
+TimeoutException: cuando una operación excede el tiempo de espera permitido.
+
+Ejemplo: Conexiones de red o tareas que tardan demasiado.
+
+-->

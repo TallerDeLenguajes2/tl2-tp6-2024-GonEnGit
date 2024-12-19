@@ -25,7 +25,9 @@ public class HomeController : Controller
 
     public IActionResult Privacy()
     {
-        return View();
+        SharedViewModel barra = new SharedViewModel();
+        barra.Rol = HttpContext.Session.GetString("Rol");
+        return View(barra);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

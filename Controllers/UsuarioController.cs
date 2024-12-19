@@ -14,10 +14,10 @@ namespace tl2_tp6_2024_GonEnGit.Controllers;
 
 public class UsuarioController : Controller
 {
-	private readonly ILogger<ProductoController> _logger;
+	private readonly ILogger<UsuarioController> _logger;
 	private readonly IUsuarioRepository _UsuarioRepository;
 
-	public UsuarioController(ILogger<ProductoController> logger, IUsuarioRepository UsuarioRepository)
+	public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository UsuarioRepository)
 	{
 		_logger = logger;
 		_UsuarioRepository = UsuarioRepository;
@@ -34,14 +34,24 @@ public class UsuarioController : Controller
 	public IActionResult Index(UsuarioViewModel usuarioBuscado)
 	{
 		Usuario usuarioEncontrado = _UsuarioRepository.BuscarUsuario(usuarioBuscado.Alias, usuarioBuscado.Pass);
-		if (usuarioEncontrado == null) return View(usuarioEncontrado);
+		if (usuarioEncontrado == null)
+		{
+			_logger.LogInformation("Intento de acceso invalido - Usuario: {alias}, Clave: {contrasenia}", usuarioBuscado.Alias, usuarioBuscado.Pass);
+			return View(usuarioBuscado);	
+		}
 
 		HttpContext.Session.SetString("Alias", usuarioEncontrado.Alias);
 		HttpContext.Session.SetString("Rol", usuarioEncontrado.Rol);
+		usuarioBuscado.Logueado = true;
 
-		usuarioBuscado.Logeado = true;
-
-		//Console.WriteLine(HttpContext.Session.GetString("Alias"));
+	// parece que para poder usar un archivo como log
+	// encesitas una libreria completamente distinta
+	// dejalo para el proyecto
+		
+		DateTime fecha = DateTime.Now;
+		string dia = fecha.ToString("dd/MM/yyyy");
+		string hora = fecha.ToString("HH:mm:ss");
+		_logger.LogInformation("El usuario {alias} se conectó el {dia} a las {hora} hs.", usuarioEncontrado.Alias, dia, hora);
 
 		return RedirectToAction("Index", "Presupuesto");
 	}

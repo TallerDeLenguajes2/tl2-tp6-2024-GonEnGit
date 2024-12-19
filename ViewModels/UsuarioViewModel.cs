@@ -14,9 +14,9 @@ public class UsuarioViewModel : SharedViewModel
 	[PasswordPropertyText(true)]
 	private string pass;
 
-	private bool logeado;
+	private bool logueado;
 
 	public string Alias { get => alias; set => alias = value; }
 	public string Pass { get => pass; set => pass = value; }
-    public bool Logeado { get => logeado; set => logeado = value; }
+    public bool Logueado { get => logueado; set => logueado = value; }
 }

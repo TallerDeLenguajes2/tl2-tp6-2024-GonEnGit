@@ -1,0 +1,19 @@
+
+NOTA: 'dotnet list package' te deja ver los paquetes instalados en la aplicacion
+
+-- dotnet add package Microsoft.Extensions.Logging.Console
+segun parece es otro paquete que no viene por defecto con una aplicacion nueva
+en teoria la primera linea instala la ultima version (o en este caso la 9.0.0 almenos)
+
+-- "Microsoft": "Warning"
+por lo que entiendo, Microsoft es un namespace para .NET, incluir esto en el
+appsettings significa que los mensaje generados por las bibliotecas del espacio
+'Microsoft' tienen un nivel minimo de 'Information' (T17 - log)
+
+-- "Default": "Information"
+es el nivel de log predeterminado, si no incluis algo mas especifico para cada espacio,
+como en el caso de 'Microsoft', todo mensaje se loggea con u nnivel de 'Information' o superior
+
+-- appsetting.Development.json
+nada raro, appsettings.json es la configuracion por defecto para todos los entornos de la app
+appsettings.Development.json es la configuracion especifica para el entorno de desarrollo

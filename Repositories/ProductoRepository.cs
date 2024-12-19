@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using EspacioModels;
+using EspacioViewModels;
 using EspacioInterfaces;
 using Microsoft.Data.Sqlite;
 
@@ -26,6 +27,9 @@ public class ProductoRepository : IProductoRepository
 
         using (SqliteConnection conexion = new SqliteConnection(_CadenaDeConexion))
         {
+        // a throw se lo puede usar para probar los try catch, forzando errores
+            //throw new InvalidOperationException("No se pudo establecer la conexión con la base de datos.");
+
             var comando = new SqliteCommand(consulta, conexion);
             conexion.Open();
             comando.Parameters.Add(new SqliteParameter("@desc", producto.Descripcion));

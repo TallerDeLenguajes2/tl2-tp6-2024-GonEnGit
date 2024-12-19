@@ -48,7 +48,7 @@ public class ProductoController : Controller
     public IActionResult RegistrarProducto()
     {
         // ----- ni siquiera hace falta crear el objero por nombre podes mandar un new
-        return View(new Producto());
+        return View(new ProductoNuevoViewModel());
     }
 // ----
 
@@ -58,10 +58,21 @@ public class ProductoController : Controller
     // ----- y un POST que resibe el objeto cargado y lo envia
     // ----- a la db usando el metodo RegistrarProducto
     [HttpPost("RegistrarProducto")]
-    public IActionResult RegistrarProducto(Producto producto)
+    public IActionResult RegistrarProducto(ProductoNuevoViewModel nuevo)
     {
-        _ProductoRepository.CargarNuevoProducto(producto);
-        return RedirectToAction("Index");
+        try
+        {
+            Producto producto = new Producto();
+            producto.Descripcion = nuevo.Desc;
+            producto.Precio = nuevo.Prec;
+            _ProductoRepository.CargarNuevoProducto(producto);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
     }
 // ----
 
